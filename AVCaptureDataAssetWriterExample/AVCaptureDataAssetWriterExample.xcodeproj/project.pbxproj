@@ -23,6 +23,7 @@
 		79E7AEB115B7DBA900E96894 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E7AEB015B7DBA900E96894 /* CoreVideo.framework */; };
 		79E7AEB315B7DBB400E96894 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E7AEB215B7DBB400E96894 /* AVFoundation.framework */; };
 		79E7AEB515B7DBBA00E96894 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E7AEB415B7DBBA00E96894 /* AssetsLibrary.framework */; };
+		E78FE8A11A4C00E000A89D55 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E78FE8A01A4C00E000A89D55 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,10 +32,10 @@
 		79E7AE8A15B7DA0300E96894 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		79E7AE8C15B7DA0300E96894 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		79E7AE8E15B7DA0300E96894 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		79E7AE9215B7DA0300E96894 /* AVCaptureDataAssetWriterExample-Info.plist */ = {isa = PBXFileReference; path = "AVCaptureDataAssetWriterExample-Info.plist"; sourceTree = "<group>"; };
+		79E7AE9215B7DA0300E96894 /* AVCaptureDataAssetWriterExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AVCaptureDataAssetWriterExample-Info.plist"; sourceTree = "<group>"; };
 		79E7AE9415B7DA0300E96894 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		79E7AE9615B7DA0300E96894 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		79E7AE9815B7DA0300E96894 /* AVCaptureDataAssetWriterExample-Prefix.pch */ = {isa = PBXFileReference; path = "AVCaptureDataAssetWriterExample-Prefix.pch"; sourceTree = "<group>"; };
+		79E7AE9815B7DA0300E96894 /* AVCaptureDataAssetWriterExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVCaptureDataAssetWriterExample-Prefix.pch"; sourceTree = "<group>"; };
 		79E7AE9915B7DA0300E96894 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		79E7AE9A15B7DA0300E96894 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		79E7AE9C15B7DA0300E96894 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -48,6 +49,7 @@
 		79E7AEB015B7DBA900E96894 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		79E7AEB215B7DBB400E96894 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		79E7AEB415B7DBBA00E96894 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		E78FE8A01A4C00E000A89D55 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 		79E7AE7B15B7DA0200E96894 = {
 			isa = PBXGroup;
 			children = (
+				E78FE8A01A4C00E000A89D55 /* Default-568h@2x.png */,
 				79E7AE9015B7DA0300E96894 /* AVCaptureDataAssetWriterExample */,
 				79E7AE9115B7DA0300E96894 /* Supporting Files */,
 				79E7AE8915B7DA0300E96894 /* Frameworks */,
@@ -159,6 +162,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
+				TargetAttributes = {
+					79E7AE8515B7DA0300E96894 = {
+						DevelopmentTeam = ZA562ZPM4Z;
+					};
+				};
 			};
 			buildConfigurationList = 79E7AE8015B7DA0200E96894 /* Build configuration list for PBXProject "AVCaptureDataAssetWriterExample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -184,6 +192,7 @@
 			files = (
 				79E7AE9515B7DA0300E96894 /* InfoPlist.strings in Resources */,
 				79E7AEA115B7DA0300E96894 /* ViewController.xib in Resources */,
+				E78FE8A11A4C00E000A89D55 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,11 +280,12 @@
 		79E7AEA515B7DA0300E96894 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVCaptureDataAssetWriterExample/AVCaptureDataAssetWriterExample-Prefix.pch";
 				INFOPLIST_FILE = "AVCaptureDataAssetWriterExample/AVCaptureDataAssetWriterExample-Info.plist";
 				PRODUCT_NAME = AVCaptureDataAssetWriterExample;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -283,11 +293,12 @@
 		79E7AEA615B7DA0300E96894 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVCaptureDataAssetWriterExample/AVCaptureDataAssetWriterExample-Prefix.pch";
 				INFOPLIST_FILE = "AVCaptureDataAssetWriterExample/AVCaptureDataAssetWriterExample-Info.plist";
 				PRODUCT_NAME = AVCaptureDataAssetWriterExample;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

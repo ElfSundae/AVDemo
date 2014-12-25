@@ -55,7 +55,7 @@
 
 - (IBAction)displayTempDirFile 
 {
-    NSString* strFile = [NSString stringWithString:@"FILE\n"];
+    NSString* strFile = @"FILE\n";
     NSError* err = nil;
     NSArray* filesArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&err];
     for(NSString* str in filesArray) {
