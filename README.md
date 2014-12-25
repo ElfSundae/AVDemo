@@ -44,3 +44,10 @@ The project includes a different target for each of the different processing pip
 
 Demonstrates how to create a custom UI for the camera variant of the UIImagePickerController and how to programmatically control video recording.
 
+
+###AudioTapProcessor
+
+Sample application that uses the MTAudioProcessingTap in combination with AV Foundation to visualize audio samples as well as applying a Core Audio audio unit effect (Bandpass Filter) to the audio data.
+
+Note: The sample requires at least one video asset in the Asset Library (Camera Roll) to use as the source media. It will automatically select the first one it finds.
+
