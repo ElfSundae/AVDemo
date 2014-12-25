@@ -3,6 +3,11 @@
 
 ---
 
+###UIImagePicker Video Recorder
+
+Demonstrates how to create a custom UI for the camera variant of the UIImagePickerController and how to programmatically control video recording.
+
+
 ###AVCam
 
 AVCam demonstrates usage of AV Foundation capture API for recording movies, taking still images, and switching cameras. It runs only on an actual device, either an iPad or iPhone, and cannot be run in the simulator.
@@ -39,10 +44,9 @@ This sample demonstrates how to use AVCaptureVideoDataOutput to bring frames fro
 
 The project includes a different target for each of the different processing pipelines.
 
+###AVSimpleEditoriOS
 
-###UIImagePicker Video Recorder
-
-Demonstrates how to create a custom UI for the camera variant of the UIImagePickerController and how to programmatically control video recording.
+A simple AV Foundation based movie editing application for iOS.
 
 
 ###AudioTapProcessor
