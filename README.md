@@ -87,6 +87,12 @@ AVCompositionDebugVieweriOS
 This sample application has an AVCompositionDebugView which presents a visual description of the underlying AVComposition, AVVideoComposition and AVAudioMix objects which form the composition made using two clips, adding a cross fade transition in between and audio ramps to the two audio tracks. The visualization provided by the sample can be used as a debugging tool to discover issues with an incorrect composition/video composition. For example: a break in video composition would render black frames to screen, which can easily be detected using the visualization in the sample.
 
 
+Frame Re-ordering Video Encoding
+======
+
+From [Frame Re-ordering Support in iOS Video Encoding](http://www.gdcl.co.uk/2014/04/22/Frame-Reordering.html)
+
+
 AVMovieExporter
 =======
 
