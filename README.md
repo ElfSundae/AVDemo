@@ -54,6 +54,17 @@ AVCustomEdit is a simple AVFoundation based movie editing application demonstrat
 
 Note: The sample has been developed for iPhones 4S and above/iPods with 4-inch display and iPads. These developed transitions are not supported on simulator.
 
+###AVMovieExporter
+
+This universal sample application reads movie files from the asset and media library then 
+exports them to a new media file with user defined settings. The user can adjust the exported file 
+in the following ways:
+
+- Export presets can be chosen which influence the size and quality of the output. 	
+- The file type can be changed.
+- Tracks and existing metadata can be inspected.
+- Metadata can be inserted or deleted.
+
 
 ###AudioTapProcessor
 
