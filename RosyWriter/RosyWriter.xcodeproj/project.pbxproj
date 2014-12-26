@@ -269,7 +269,9 @@
 				6F90DDD81395CAAA00125BDA /* Frameworks */,
 				6F90DDD61395CAAA00125BDA /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		6F90DDD61395CAAA00125BDA /* Products */ = {
 			isa = PBXGroup;

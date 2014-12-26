@@ -254,13 +254,29 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	} );
 }
 
++ (AVCaptureDevice *)videoCaptureDeviceWithPreferredPosition:(AVCaptureDevicePosition)position
+{
+    AVCaptureDevice *videoDevice = nil;
+    
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    videoDevice = devices.firstObject;
+    for (AVCaptureDevice *d in devices) {
+        if (position == d.position) {
+            videoDevice = d;
+            break;
+        }
+    }
+    
+    return videoDevice;
+}
+
 - (void)setupCaptureSession
 {
 	if ( _captureSession ) {
 		return;
 	}
 	
-	_captureSession = [[AVCaptureSession alloc] init];	
+	_captureSession = [[AVCaptureSession alloc] init];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(captureSessionNotification:) name:nil object:_captureSession];
 	_applicationWillEnterForegroundNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:[UIApplication sharedApplication] queue:nil usingBlock:^(NSNotification *note) {
@@ -292,7 +308,11 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 #endif // RECORD_AUDIO
 	
 	/* Video */
+#if 1
 	AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+#else
+    AVCaptureDevice *videoDevice = [self.class videoCaptureDeviceWithPreferredPosition:AVCaptureDevicePositionFront];
+#endif
 	_videoDevice = videoDevice;
 	AVCaptureDeviceInput *videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:videoDevice error:nil];
 	if ( [_captureSession canAddInput:videoIn] ) {
