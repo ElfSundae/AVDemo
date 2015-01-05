@@ -132,3 +132,10 @@ A basic Photos-like app which introduces the Photos framework.
 	* favoriting an asset
 
 
+CIFunHouse
+======
+
+**Core Image Filters with Photos and Video for iOS**
+
+The CIFunHouse project shows how to apply Core Image built in and custom CIFilters to photos and video.
+
