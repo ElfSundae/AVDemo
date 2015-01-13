@@ -96,9 +96,10 @@
 	_ciContext = [[CIContext contextWithEAGLContext:eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]} ] retain];
 	[eaglContext release];
 	
-	_rosyFilter = [[CIFilter filterWithName:@"CIColorMatrix"] retain];
-	CGFloat greenCoefficients[4] = { 0, 0, 0, 0 };
-	[_rosyFilter setValue:[CIVector vectorWithValues:greenCoefficients count:4] forKey:@"inputGVector"];
+	//_rosyFilter = [[CIFilter filterWithName:@"CIColorMatrix"] retain];
+    _rosyFilter = [[CIFilter filterWithName:@"MVSkinWhiten"] retain];
+//	CGFloat greenCoefficients[4] = { 0, 0, 0, 0 };
+//	[_rosyFilter setValue:[CIVector vectorWithValues:greenCoefficients count:4] forKey:@"inputGVector"];
 }
 
 - (void)reset
