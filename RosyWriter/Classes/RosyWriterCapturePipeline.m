@@ -308,7 +308,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 #endif // RECORD_AUDIO
 	
 	/* Video */
-#if 1
+#if 0
 	AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 #else
     AVCaptureDevice *videoDevice = [self.class videoCaptureDeviceWithPreferredPosition:AVCaptureDevicePositionFront];
