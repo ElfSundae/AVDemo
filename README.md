@@ -78,6 +78,10 @@ Note: The sample has been developed for iPhones 4S and above/iPods with 4-inch d
 
 The AVFoundationExporter sample demonstrates how to export and transcode movie files, add metadata to movie files, and filter existing metadata in movie files using the AVAssetExportSession class.
 
+### AVFoundationSimplePlayer-iOS: Using AVFoundation to Play Media
+
+Demonstrates how to create a simple movie playback app using only the AVPlayer and AVPlayerLayer classes from AVFoundation (not AVKit). You'll see how to open a movie file and then how to implement various functionality including play, pause, fast forward, rewind, volume adjustment, time slider updating, and scrubbing.
+
 ### AVGreenScreenPlayer
 
 This OS X sample application uses AVPlayerItemVideoOutput in combination with a custom CIFilter to do basic chroma keying in real time.
