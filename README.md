@@ -102,6 +102,10 @@ This sample demonstrates how to use multiple synchronized AVPlayerLayer instance
 
 This sample was explored in the WWDC 2012 session 517: Real-Time Media Effects and Processing during Playback. <https://developer.apple.com/library/ios/samplecode/AVLoupe/>
 
+### AVMetadataRecordPlay: Timed Metadata Capture Recording and Playback
+
+The AVMetadataRecordPlay sample demonstrates how to use AVFoundation capture APIs to record and play movies with timed metadata content. The sample also shows how to use timed-metadata tracks to record detected-face, video orientation, and GPS metadata. When playing back content, the AVMetadataRecordPlay class reads the detected-face and GPS timed metadata tracks and uses it to render augmentations on the video layer to indicate their values. AVMetadataRecordPlay also reads the video orientation metadata and dynamically adjusts the video layer to properly render the content. The sample runs only on an actual device (iPad or iPhone); you can’t run it in the Simulator.
+
 ### AVMovieExporter
 
 This universal sample application reads movie files from the asset and media library then
