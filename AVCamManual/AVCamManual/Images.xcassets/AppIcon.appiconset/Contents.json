@@ -7,16 +7,34 @@
       "scale" : "2x"
     },
     {
+      "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "AVCamManual-11.png",
+      "scale" : "3x"
+    },
+    {
       "size" : "40x40",
       "idiom" : "iphone",
       "filename" : "AVCamManual-1.png",
       "scale" : "2x"
     },
     {
+      "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "AVCamManual-12.png",
+      "scale" : "3x"
+    },
+    {
       "size" : "60x60",
       "idiom" : "iphone",
       "filename" : "AVCamManual-2.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "AVCamManual-10.png",
+      "scale" : "3x"
     },
     {
       "size" : "29x29",
@@ -31,27 +49,33 @@
       "scale" : "2x"
     },
     {
-      "size" : "50x50",
+      "size" : "40x40",
       "idiom" : "ipad",
       "filename" : "AVCamManual-5.png",
       "scale" : "1x"
     },
     {
-      "size" : "50x50",
+      "size" : "40x40",
       "idiom" : "ipad",
       "filename" : "AVCamManual-6.png",
       "scale" : "2x"
     },
     {
-      "size" : "72x72",
+      "size" : "76x76",
       "idiom" : "ipad",
       "filename" : "AVCamManual-7.png",
       "scale" : "1x"
     },
     {
-      "size" : "72x72",
+      "size" : "76x76",
       "idiom" : "ipad",
       "filename" : "AVCamManual-8.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "AVCamManual-9.png",
       "scale" : "2x"
     }
   ],
