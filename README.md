@@ -34,6 +34,10 @@ https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture
 
 Capture photos with depth data and record video using the front and rear iPhone and iPad cameras.
 
+### AVCamBarcode: Using AVFoundation to Detect Barcodes and Faces
+
+This sample demonstrates how to use the AVFoundation capture API to detect barcodes and faces.
+
 ### AVCamFilter: Applying Filters to a Capture Stream
 
 https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcamfilter_applying_filters_to_a_capture_stream?language=objc
