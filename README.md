@@ -78,6 +78,10 @@ Note: The sample has been developed for iPhones 4S and above/iPods with 4-inch d
 
 The AVFoundationExporter sample demonstrates how to export and transcode movie files, add metadata to movie files, and filter existing metadata in movie files using the AVAssetExportSession class.
 
+### AVFoundationPiPPlayer: Picture-in-Picture Playback with AVKit
+
+Demonstrates how to use the AVPictureInPictureController class to implement picture-in-picture video playback. It shows the steps required to start and stop picture-in-picture mode and to setup a delegate to receive event callbacks. Clients of AVFoundation using the AVPlayerLayer class for media playback must use the AVPictureInPictureController class, whereas clients of AVKit who use the AVPlayerViewController class get picture-in-picture mode without any additional setup.
+
 ### AVFoundationQueuePlayer-iOS: Using a Mixture of Local File Based Assets and HTTP Live Streaming Assets with AVFoundation
 
 Demonstrates how to create a movie queue playback app using only the AVQueuePlayer and AVPlayerLayer classes of AVFoundation (not AVKit). You’ll find out how to manage a queue compromised of local, HTTP-live-streamed, and progressive-download movies. You’ll also see how to implement play, pause, skip, volume adjustment, time slider updating, and scrubbing.
