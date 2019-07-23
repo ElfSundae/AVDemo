@@ -32,6 +32,12 @@ An AVPlayerItemVideoOutput object vends CVPixelBuffers in real-time. To drive th
 
 AVCam demonstrates usage of AV Foundation capture API for recording movies, taking still images, and switching cameras. It runs only on an actual device, either an iPad or iPhone, and cannot be run in the simulator.
 
+### AVCam: Building a Camera App
+
+https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app?language=objc
+
+Capture photos with depth data and record video using the front and rear iPhone and iPad cameras.
+
 ### AVCamManual: Extending AVCam to Use Manual Capture API
 
 AVCamManual adds manual controls for focus, exposure, and white balance to the AVCam sample application.
