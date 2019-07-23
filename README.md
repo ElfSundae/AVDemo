@@ -28,7 +28,7 @@ AVCamManual adds manual controls for focus, exposure, and white balance to the A
 AVBasicVideoOutput
 =======
 
-The AVBasicVideoOutput This sample shows how to perform **real-time video processing** using `AVPlayerItemVideoOutput` and how to optimally display processed video frames on screen using CAEAGLLayer and CADisplayLink. It uses simple math to adjust the luma and chroma values of pixels in every video frame in real time. 
+The AVBasicVideoOutput This sample shows how to perform **real-time video processing** using `AVPlayerItemVideoOutput` and how to optimally display processed video frames on screen using CAEAGLLayer and CADisplayLink. It uses simple math to adjust the luma and chroma values of pixels in every video frame in real time.
 
 An AVPlayerItemVideoOutput object vends CVPixelBuffers in real-time. To drive the AVPlayerItemVideoOutput we need to use a fixed rate, **hardware synchronized service** like CADisplayLink or GLKitViewController. These services send a callback to the application at the vertical sync frequency. Through these callbacks we can query AVPlayerItemVideoOutput for a new pixel buffer (if available) for the next vertical sync. This pixel buffer is then processed for any video effect we wish to apply and rendered to screen on a view backed by a CAEAGLLayer.
 
@@ -51,6 +51,8 @@ tessellated quad.
 RosyWriter
 =======
 
+Capture, process, preview, and save video using AV Foundation using various processing pipelines.
+
 This sample demonstrates how to use AVCaptureVideoDataOutput to bring frames from the camera into various processing pipelines, including CPU-based, OpenGL (i.e. on the GPU), CoreImage filters, and OpenCV. It also demonstrates best practices for writing the processed output of these pipelines to a movie file using AVAssetWriter.
 
 The project includes a different target for each of the different processing pipelines.
@@ -63,7 +65,7 @@ A simple AV Foundation based movie editing application for iOS.
 AVCustomEdit
 =======
 
-AVCustomEdit is a simple AVFoundation based movie editing application demonstrating custom compositing to add transitions. The sample demonstrates the use of custom compositors to add transitions to an AVMutableComposition. It implements the AVVideoCompositing and AVVideoCompositionInstruction protocols to have access to individual source frames, which are then be rendered using OpenGL off screen rendering. 
+AVCustomEdit is a simple AVFoundation based movie editing application demonstrating custom compositing to add transitions. The sample demonstrates the use of custom compositors to add transitions to an AVMutableComposition. It implements the AVVideoCompositing and AVVideoCompositionInstruction protocols to have access to individual source frames, which are then be rendered using OpenGL off screen rendering.
 
 Note: The sample has been developed for iPhones 4S and above/iPods with 4-inch display and iPads. These developed transitions are not supported on simulator.
 
@@ -96,11 +98,11 @@ From [Frame Re-ordering Support in iOS Video Encoding](http://www.gdcl.co.uk/201
 AVMovieExporter
 =======
 
-This universal sample application reads movie files from the asset and media library then 
-exports them to a new media file with user defined settings. The user can adjust the exported file 
+This universal sample application reads movie files from the asset and media library then
+exports them to a new media file with user defined settings. The user can adjust the exported file
 in the following ways:
 
-- Export presets can be chosen which influence the size and quality of the output. 	
+- Export presets can be chosen which influence the size and quality of the output.
 - The file type can be changed.
 - Tracks and existing metadata can be inspected.
 - Metadata can be inserted or deleted.
@@ -118,7 +120,7 @@ Sample Photos App
 
 **Example app using Photos framework** From WWDC 2014
 
-A basic Photos-like app which introduces the Photos framework. 
+A basic Photos-like app which introduces the Photos framework.
 - List albums, folders and moments
 - Display the contents of the moments, or a single album
 - Display the content of a single photo or video (and allow playback in the case of a video)

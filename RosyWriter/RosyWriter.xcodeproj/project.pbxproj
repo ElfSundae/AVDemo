@@ -106,7 +106,6 @@
 		6FF11C9516A877B100E14D71 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 6FF11C9116A877B100E14D71 /* matrix.c */; };
 		6FF11C9616A877B100E14D71 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 6FF11C9316A877B100E14D71 /* ShaderUtilities.c */; };
 		7214DBCE182AEF8900EA3F99 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7214DBCD182AEF8900EA3F99 /* Images.xcassets */; };
-		E73557A51A5CCC75008C2D7F /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73557A41A5CCC75008C2D7F /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,7 +133,7 @@
 		6F90DDDD1395CAAA00125BDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6F90DDE11395CAAA00125BDA /* RosyWriter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RosyWriter-Info.plist"; path = "../RosyWriter-Info.plist"; sourceTree = "<group>"; };
 		6F90DDE31395CAAA00125BDA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6F90DDE51395CAAA00125BDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
+		6F90DDE51395CAAA00125BDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = main.m; path = ../main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6F90DDE71395CAAA00125BDA /* RosyWriter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RosyWriter-Prefix.pch"; path = "../RosyWriter-Prefix.pch"; sourceTree = "<group>"; };
 		6F90DDE81395CAAA00125BDA /* RosyWriterAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RosyWriterAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		6F90DDE91395CAAA00125BDA /* RosyWriterAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RosyWriterAppDelegate.m; sourceTree = "<group>"; };
@@ -149,17 +148,16 @@
 		6F90DE0E1395CD9C00125BDA /* RosyWriterCapturePipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RosyWriterCapturePipeline.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		6F90DE0F1395CD9C00125BDA /* RosyWriterCapturePipeline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RosyWriterCapturePipeline.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6FE5A733160BAC8000F6DB2B /* RosyWriterOpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterOpenGLRenderer.h; sourceTree = "<group>"; };
-		6FE5A734160BAC8000F6DB2B /* RosyWriterOpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterOpenGLRenderer.m; sourceTree = "<group>"; };
+		6FE5A734160BAC8000F6DB2B /* RosyWriterOpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RosyWriterOpenGLRenderer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6FF11C8916A8779D00E14D71 /* MovieRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieRecorder.h; path = Utilities/MovieRecorder.h; sourceTree = "<group>"; };
 		6FF11C8A16A8779D00E14D71 /* MovieRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MovieRecorder.m; path = Utilities/MovieRecorder.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6FF11C8B16A8779D00E14D71 /* OpenGLPixelBufferView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLPixelBufferView.h; path = Utilities/OpenGLPixelBufferView.h; sourceTree = "<group>"; };
-		6FF11C8C16A8779D00E14D71 /* OpenGLPixelBufferView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenGLPixelBufferView.m; path = Utilities/OpenGLPixelBufferView.m; sourceTree = "<group>"; };
+		6FF11C8C16A8779D00E14D71 /* OpenGLPixelBufferView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = OpenGLPixelBufferView.m; path = Utilities/OpenGLPixelBufferView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6FF11C9116A877B100E14D71 /* matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = matrix.c; path = Utilities/GL/matrix.c; sourceTree = "<group>"; };
 		6FF11C9216A877B100E14D71 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = matrix.h; path = Utilities/GL/matrix.h; sourceTree = "<group>"; };
-		6FF11C9316A877B100E14D71 /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ShaderUtilities.c; path = Utilities/GL/ShaderUtilities.c; sourceTree = "<group>"; };
-		6FF11C9416A877B100E14D71 /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderUtilities.h; path = Utilities/GL/ShaderUtilities.h; sourceTree = "<group>"; };
+		6FF11C9316A877B100E14D71 /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ShaderUtilities.c; path = Utilities/GL/ShaderUtilities.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		6FF11C9416A877B100E14D71 /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ShaderUtilities.h; path = Utilities/GL/ShaderUtilities.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		7214DBCD182AEF8900EA3F99 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		E73557A41A5CCC75008C2D7F /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,7 +210,6 @@
 				696D281C19CA539900A23D81 /* AVFoundation.framework in Frameworks */,
 				696D281D19CA539900A23D81 /* UIKit.framework in Frameworks */,
 				696D281E19CA539900A23D81 /* Foundation.framework in Frameworks */,
-				E73557A51A5CCC75008C2D7F /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +261,6 @@
 		6F90DDCA1395CAAA00125BDA = {
 			isa = PBXGroup;
 			children = (
-				E73557A41A5CCC75008C2D7F /* opencv2.framework */,
 				28365598139FE71B00D09100 /* ReadMe.txt */,
 				6F90DDDF1395CAAA00125BDA /* Classes */,
 				6FF11C8616A8778500E14D71 /* Utilities */,
@@ -273,9 +269,7 @@
 				6F90DDD81395CAAA00125BDA /* Frameworks */,
 				6F90DDD61395CAAA00125BDA /* Products */,
 			);
-			indentWidth = 4;
 			sourceTree = "<group>";
-			tabWidth = 4;
 		};
 		6F90DDD61395CAAA00125BDA /* Products */ = {
 			isa = PBXGroup;
@@ -446,19 +440,19 @@
 		6F90DDCC1395CAAA00125BDA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					1756C9D419BE5E1F0080DD55 = {
-						DevelopmentTeam = ZA562ZPM4Z;
+            CreatedOnToolsVersion = 8.0;
 					};
 					1FCCE64619BA80A5009D7A6B = {
-						DevelopmentTeam = ZA562ZPM4Z;
+            CreatedOnToolsVersion = 8.0;
 					};
 					696D280919CA539900A23D81 = {
-						DevelopmentTeam = ZA562ZPM4Z;
+            CreatedOnToolsVersion = 8.0;
 					};
 					6F90DDD41395CAAA00125BDA = {
-						DevelopmentTeam = ZA562ZPM4Z;
+            CreatedOnToolsVersion = 8.0;
 					};
 				};
 			};
@@ -643,6 +637,7 @@
 				INFOPLIST_FILE = "RosyWriter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DUSE_CIFILTER_RENDERER=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = RosyWriterCIFilter;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -662,6 +657,7 @@
 				INFOPLIST_FILE = "RosyWriter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DUSE_CIFILTER_RENDERER=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = RosyWriterCIFilter;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -681,6 +677,7 @@
 				INFOPLIST_FILE = "RosyWriter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DUSE_CPU_RENDERER=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = RosyWriterCPU;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -700,6 +697,7 @@
 				INFOPLIST_FILE = "RosyWriter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DUSE_CPU_RENDERER=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = RosyWriterCPU;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -714,15 +712,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RosyWriter-Prefix.pch";
 				INFOPLIST_FILE = "RosyWriter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DUSE_OPENCV_RENDERER=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = RosyWriterOpenCV;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -737,15 +732,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RosyWriter-Prefix.pch";
 				INFOPLIST_FILE = "RosyWriter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DUSE_OPENCV_RENDERER=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = RosyWriterOpenCV;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -757,7 +749,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = NO;
+				ASSETCATALOG_COMPRESSION = lossless;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -768,8 +761,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -798,7 +793,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = NO;
+				ASSETCATALOG_COMPRESSION = "respect-asset-catalog";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -811,6 +807,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -842,6 +839,7 @@
 				INFOPLIST_FILE = "RosyWriter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DUSE_OPENGL_RENDERER=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = RosyWriterOpenGL;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -861,6 +859,7 @@
 				INFOPLIST_FILE = "RosyWriter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DUSE_OPENGL_RENDERER=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = RosyWriterOpenGL;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

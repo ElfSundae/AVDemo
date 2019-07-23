@@ -1,49 +1,10 @@
 
 /*
-     File: RosyWriterCapturePipeline.m
- Abstract: The class that creates and manages the AVCaptureSession
-  Version: 2.1
+ Copyright (C) 2016 Apple Inc. All Rights Reserved.
+ See LICENSE.txt for this sample’s licensing information
  
- Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
- Inc. ("Apple") in consideration of your agreement to the following
- terms, and your use, installation, modification or redistribution of
- this Apple software constitutes acceptance of these terms.  If you do
- not agree with these terms, please do not use, install, modify or
- redistribute this Apple software.
- 
- In consideration of your agreement to abide by the following terms, and
- subject to these terms, Apple grants you a personal, non-exclusive
- license, under Apple's copyrights in this original Apple software (the
- "Apple Software"), to use, reproduce, modify and redistribute the Apple
- Software, with or without modifications, in source and/or binary forms;
- provided that if you redistribute the Apple Software in its entirety and
- without modifications, you must retain this notice and the following
- text and disclaimers in all such redistributions of the Apple Software.
- Neither the name, trademarks, service marks or logos of Apple Inc. may
- be used to endorse or promote products derived from the Apple Software
- without specific prior written permission from Apple.  Except as
- expressly stated in this notice, no other rights or licenses, express or
- implied, are granted by Apple herein, including but not limited to any
- patent rights that may be infringed by your derivative works or by other
- works in which the Apple Software may be incorporated.
- 
- The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
- MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
- THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
- FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
- OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
- 
- IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
- OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
- MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
- AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
- STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
- POSSIBILITY OF SUCH DAMAGE.
- 
- Copyright (C) 2014 Apple Inc. All Rights Reserved.
- 
+ Abstract:
+ The class that creates and manages the AVCaptureSession
  */
 
 #import "RosyWriterCapturePipeline.h"
@@ -59,8 +20,6 @@
 #import <CoreMedia/CMAudioClock.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/CGImageProperties.h>
-
-#include <objc/runtime.h> // for objc_loadWeak() and objc_storeWeak()
 
 /*
  RETAINED_BUFFER_COUNT is the number of pixel buffers we expect to hold on to from the renderer. This value informs the renderer how to size its buffer pool and how many pixel buffers to preallocate (done in the prepareWithOutputDimensions: method). Preallocation helps to lessen the chance of frame drops in our recording, in particular during recording startup. If we try to hold on to more buffers than RETAINED_BUFFER_COUNT then the renderer will fail to allocate new buffers from its pool and we will drop frames.
@@ -90,15 +49,13 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 
 @interface RosyWriterCapturePipeline () <AVCaptureAudioDataOutputSampleBufferDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, MovieRecorderDelegate>
 {
-	__weak id <RosyWriterCapturePipelineDelegate> _delegate; // __weak doesn't actually do anything under non-ARC
-	dispatch_queue_t _delegateCallbackQueue;
-	
 	NSMutableArray *_previousSecondTimestamps;
 
 	AVCaptureSession *_captureSession;
 	AVCaptureDevice *_videoDevice;
 	AVCaptureConnection *_audioConnection;
 	AVCaptureConnection *_videoConnection;
+	AVCaptureVideoOrientation _videoBufferOrientation;
 	BOOL _running;
 	BOOL _startCaptureSessionOnEnteringForeground;
 	id _applicationWillEnterForegroundNotificationObserver;
@@ -111,33 +68,39 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	id<RosyWriterRenderer> _renderer;
 	BOOL _renderingEnabled;
 	
+	MovieRecorder *_recorder;
 	NSURL *_recordingURL;
 	RosyWriterRecordingStatus _recordingStatus;
 	
 	UIBackgroundTaskIdentifier _pipelineRunningTask;
+	
+	__weak id<RosyWriterCapturePipelineDelegate> _delegate;
+	dispatch_queue_t _delegateCallbackQueue;
 }
 
-@property(nonatomic, retain) __attribute__((NSObject)) CVPixelBufferRef currentPreviewPixelBuffer;
+// Redeclared readwrite
+@property(atomic, readwrite) float videoFrameRate;
+@property(atomic, readwrite) CMVideoDimensions videoDimensions;
 
-@property(readwrite) float videoFrameRate;
-@property(readwrite) CMVideoDimensions videoDimensions;
-@property(nonatomic, readwrite) AVCaptureVideoOrientation videoOrientation;
-
-@property(nonatomic, retain) __attribute__((NSObject)) CMFormatDescriptionRef outputVideoFormatDescription;
-@property(nonatomic, retain) __attribute__((NSObject)) CMFormatDescriptionRef outputAudioFormatDescription;
-@property(nonatomic, retain) MovieRecorder *recorder;
+// Because we specify __attribute__((NSObject)) ARC will manage the lifetime of the backing ivars even though they are CF types.
+@property(nonatomic, strong) __attribute__((NSObject)) CVPixelBufferRef currentPreviewPixelBuffer;
+@property(nonatomic, strong) __attribute__((NSObject)) CMFormatDescriptionRef outputVideoFormatDescription;
+@property(nonatomic, strong) __attribute__((NSObject)) CMFormatDescriptionRef outputAudioFormatDescription;
 
 @end
 
 @implementation RosyWriterCapturePipeline
 
-- (instancetype)init
+- (instancetype)initWithDelegate:(id<RosyWriterCapturePipelineDelegate>)delegate callbackQueue:(dispatch_queue_t)queue // delegate is weak referenced
 {
+	NSParameterAssert( delegate != nil );
+	NSParameterAssert( queue != nil );
+	
 	self = [super init];
 	if ( self )
 	{
 		_previousSecondTimestamps = [[NSMutableArray alloc] init];
-		_recordingOrientation = (AVCaptureVideoOrientation)UIDeviceOrientationPortrait;
+		_recordingOrientation = AVCaptureVideoOrientationPortrait;
 		
 		_recordingURL = [[NSURL alloc] initFileURLWithPath:[NSString pathWithComponents:@[NSTemporaryDirectory(), @"Movie.MOV"]]];
 		
@@ -162,68 +125,15 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 #endif
 				
 		_pipelineRunningTask = UIBackgroundTaskInvalid;
+		_delegate = delegate;
+		_delegateCallbackQueue = queue;
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	objc_storeWeak( &_delegate, nil ); // unregister _delegate as a weak reference
-	
-	[_delegateCallbackQueue release];
-
-	if ( _currentPreviewPixelBuffer ) {
-		CFRelease( _currentPreviewPixelBuffer );
-	}
-	
-	[_previousSecondTimestamps release];
-	
 	[self teardownCaptureSession];
-	
-	[_sessionQueue release];
-	[_videoDataOutputQueue release];
-	
-	[_renderer release];
-	
-	if ( _outputVideoFormatDescription ) {
-		CFRelease( _outputVideoFormatDescription );
-	}
-	
-	if ( _outputAudioFormatDescription ) {
-		CFRelease( _outputAudioFormatDescription );
-	}
-	
-	[_recorder release];
-	[_recordingURL release];
-	
-	[super dealloc];
-}
-
-#pragma mark Delegate
-
-- (void)setDelegate:(id<RosyWriterCapturePipelineDelegate>)delegate callbackQueue:(dispatch_queue_t)delegateCallbackQueue // delegate is weak referenced
-{
-	if ( delegate && ( delegateCallbackQueue == NULL ) ) {
-		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Caller must provide a delegateCallbackQueue" userInfo:nil];
-	}
-	
-	@synchronized( self )
-	{
-		objc_storeWeak( &_delegate, delegate ); // unnecessary under ARC, just assign to _delegate directly
-		if ( delegateCallbackQueue != _delegateCallbackQueue ) {
-			[_delegateCallbackQueue release];
-			_delegateCallbackQueue = [delegateCallbackQueue retain];
-		}
-	}
-}
-
-- (id<RosyWriterCapturePipelineDelegate>)delegate
-{
-	id <RosyWriterCapturePipelineDelegate> delegate = nil;
-	@synchronized( self ) {
-		delegate = objc_loadWeak( &_delegate ); // unnecessary under ARC, just assign delegate to _delegate directly
-	}
-	return delegate;
 }
 
 #pragma mark Capture Session
@@ -233,8 +143,10 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	dispatch_sync( _sessionQueue, ^{
 		[self setupCaptureSession];
 		
-		[_captureSession startRunning];
-		_running = YES;
+		if ( _captureSession ) {
+			[_captureSession startRunning];
+			_running = YES;
+		}
 	} );
 }
 
@@ -254,29 +166,13 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	} );
 }
 
-+ (AVCaptureDevice *)videoCaptureDeviceWithPreferredPosition:(AVCaptureDevicePosition)position
-{
-    AVCaptureDevice *videoDevice = nil;
-    
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-    videoDevice = devices.firstObject;
-    for (AVCaptureDevice *d in devices) {
-        if (position == d.position) {
-            videoDevice = d;
-            break;
-        }
-    }
-    
-    return videoDevice;
-}
-
 - (void)setupCaptureSession
 {
 	if ( _captureSession ) {
 		return;
 	}
 	
-	_captureSession = [[AVCaptureSession alloc] init];
+	_captureSession = [[AVCaptureSession alloc] init];	
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(captureSessionNotification:) name:nil object:_captureSession];
 	_applicationWillEnterForegroundNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:[UIApplication sharedApplication] queue:nil usingBlock:^(NSNotification *note) {
@@ -308,17 +204,17 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 #endif // RECORD_AUDIO
 	
 	/* Video */
-#if 1
 	AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-#else
-    AVCaptureDevice *videoDevice = [self.class videoCaptureDeviceWithPreferredPosition:AVCaptureDevicePositionFront];
-#endif
-	_videoDevice = videoDevice;
-	AVCaptureDeviceInput *videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:videoDevice error:nil];
+	NSError *videoDeviceError = nil;
+	AVCaptureDeviceInput *videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:videoDevice error:&videoDeviceError];
 	if ( [_captureSession canAddInput:videoIn] ) {
 		[_captureSession addInput:videoIn];
+        _videoDevice = videoDevice;
 	}
-	[videoIn release];
+	else {
+		[self handleNonRecoverableCaptureSessionRuntimeError:videoDeviceError];
+		return;
+	}
 	
 	AVCaptureVideoDataOutput *videoOut = [[AVCaptureVideoDataOutput alloc] init];
 	videoOut.videoSettings = @{ (id)kCVPixelBufferPixelFormatTypeKey : @(_renderer.inputPixelFormat) };
@@ -378,9 +274,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 #endif
 	_videoCompressionSettings = [[videoOut recommendedVideoSettingsForAssetWriterWithOutputFileType:AVFileTypeQuickTimeMovie] copy];
 	
-	self.videoOrientation = _videoConnection.videoOrientation;
-	
-	[videoOut release];
+	_videoBufferOrientation = _videoConnection.videoOrientation;
 	
 	return;
 }
@@ -394,12 +288,9 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 		[[NSNotificationCenter defaultCenter] removeObserver:_applicationWillEnterForegroundNotificationObserver];
 		_applicationWillEnterForegroundNotificationObserver = nil;
 		
-		[_captureSession release];
 		_captureSession = nil;
 		
-		[_videoCompressionSettings release];
 		_videoCompressionSettings = nil;
-		[_audioCompressionSettings release];
 		_audioCompressionSettings = nil;
 	}
 }
@@ -467,31 +358,26 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	_running = NO;
 	[self teardownCaptureSession];
 	
-	@synchronized( self ) 
-	{
-		if ( self.delegate ) {
-			dispatch_async( _delegateCallbackQueue, ^{
-				@autoreleasepool {
-					[self.delegate capturePipeline:self didStopRunningWithError:error];
-				}
-			});
-		}
-	}
+	[self invokeDelegateCallbackAsync:^{
+		[_delegate capturePipeline:self didStopRunningWithError:error];
+	}];
 }
 
 - (void)captureSessionDidStopRunning
 {
-	[self stopRecording]; // does nothing if we aren't currently recording
+	[self stopRecording]; // a no-op if we aren't recording
 	[self teardownVideoPipeline];
 }
 
 - (void)applicationWillEnterForeground
 {
-	NSLog( @"-[%@ %@] called", NSStringFromClass([self class]), NSStringFromSelector(_cmd) );
+	NSLog( @"-[%@ %@] called", [self class], NSStringFromSelector(_cmd) );
 	
 	dispatch_sync( _sessionQueue, ^{
-		if ( _startCaptureSessionOnEnteringForeground ) {
-			NSLog( @"-[%@ %@] manually restarting session", NSStringFromClass([self class]), NSStringFromSelector(_cmd) );
+		
+		if ( _startCaptureSessionOnEnteringForeground )
+		{
+			NSLog( @"-[%@ %@] manually restarting session", [self class], NSStringFromSelector(_cmd) );
 			
 			_startCaptureSessionOnEnteringForeground = NO;
 			if ( _running ) {
@@ -505,7 +391,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 
 - (void)setupVideoPipelineWithInputFormatDescription:(CMFormatDescriptionRef)inputFormatDescription
 {
-	NSLog( @"-[%@ %@] called", NSStringFromClass([self class]), NSStringFromSelector(_cmd) );
+	NSLog( @"-[%@ %@] called", [self class], NSStringFromSelector(_cmd) );
 	
 	[self videoPipelineWillStartRunning];
 	
@@ -528,18 +414,19 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	// Synchronize with that queue to guarantee no more buffers are in flight.
 	// Once the pipeline is drained we can tear it down safely.
 
-	NSLog( @"-[%@ %@] called", NSStringFromClass([self class]), NSStringFromSelector(_cmd) );
+	NSLog( @"-[%@ %@] called", [self class], NSStringFromSelector(_cmd) );
 	
 	dispatch_sync( _videoDataOutputQueue, ^{
+		
 		if ( ! self.outputVideoFormatDescription ) {
 			return;
 		}
 		
-		self.outputVideoFormatDescription = nil;
+		self.outputVideoFormatDescription = NULL;
 		[_renderer reset];
 		self.currentPreviewPixelBuffer = NULL;
 		
-		NSLog( @"-[%@ %@] finished teardown", NSStringFromClass([self class]), NSStringFromSelector(_cmd) );
+		NSLog( @"-[%@ %@] finished teardown", [self class], NSStringFromSelector(_cmd) );
 		
 		[self videoPipelineDidFinishRunning];
 	} );
@@ -547,7 +434,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 
 - (void)videoPipelineWillStartRunning
 {
-	NSLog( @"-[%@ %@] called", NSStringFromClass([self class]), NSStringFromSelector(_cmd) );
+	NSLog( @"-[%@ %@] called", [self class], NSStringFromSelector(_cmd) );
 	
 	NSAssert( _pipelineRunningTask == UIBackgroundTaskInvalid, @"should not have a background task active before the video pipeline starts running" );
 	
@@ -558,7 +445,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 
 - (void)videoPipelineDidFinishRunning
 {
-	NSLog( @"-[%@ %@] called", NSStringFromClass([self class]), NSStringFromSelector(_cmd) );
+	NSLog( @"-[%@ %@] called", [self class], NSStringFromSelector(_cmd) );
 	
 	NSAssert( _pipelineRunningTask != UIBackgroundTaskInvalid, @"should have a background task active when the video pipeline finishes running" );
 	
@@ -566,18 +453,14 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	_pipelineRunningTask = UIBackgroundTaskInvalid;
 }
 
-// call under @synchronized( self )
 - (void)videoPipelineDidRunOutOfBuffers
 {
 	// We have run out of buffers.
 	// Tell the delegate so that it can flush any cached buffers.
-	if ( self.delegate ) {
-		dispatch_async( _delegateCallbackQueue, ^{
-			@autoreleasepool {
-				[self.delegate capturePipelineDidRunOutOfPreviewBuffers:self];
-			}
-		} );
-	}
+	
+	[self invokeDelegateCallbackAsync:^{
+		[_delegate capturePipelineDidRunOutOfPreviewBuffers:self];
+	}];
 }
 
 - (void)setRenderingEnabled:(BOOL)renderingEnabled
@@ -594,43 +477,13 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	}
 }
 
-// call under @synchronized( self )
-- (void)outputPreviewPixelBuffer:(CVPixelBufferRef)previewPixelBuffer
-{
-	if ( self.delegate )
-	{
-		// Keep preview latency low by dropping stale frames that have not been picked up by the delegate yet
-		self.currentPreviewPixelBuffer = previewPixelBuffer;
-		
-		dispatch_async( _delegateCallbackQueue, ^{
-			@autoreleasepool
-			{
-				CVPixelBufferRef currentPreviewPixelBuffer = NULL;
-				@synchronized( self )
-				{
-					currentPreviewPixelBuffer = self.currentPreviewPixelBuffer;
-					if ( currentPreviewPixelBuffer ) {
-						CFRetain( currentPreviewPixelBuffer );
-						self.currentPreviewPixelBuffer = NULL;
-					}
-				}
-				
-				if ( currentPreviewPixelBuffer ) {
-					[self.delegate capturePipeline:self previewPixelBufferReadyForDisplay:currentPreviewPixelBuffer];
-					CFRelease( currentPreviewPixelBuffer );
-				}
-			}
-		} );
-	}
-}
-
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
 	CMFormatDescriptionRef formatDescription = CMSampleBufferGetFormatDescription( sampleBuffer );
 	
 	if ( connection == _videoConnection )
 	{
-		if ( self.outputVideoFormatDescription == nil ) {
+		if ( self.outputVideoFormatDescription == NULL ) {
 			// Don't render the first sample buffer.
 			// This gives us one frame interval (33ms at 30fps) for setupVideoPipelineWithInputFormatDescription: to complete.
 			// Ideally this would be done asynchronously to ensure frames don't back up on slower devices.
@@ -646,7 +499,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 		
 		@synchronized( self ) {
 			if ( _recordingStatus == RosyWriterRecordingStatusRecording ) {
-				[self.recorder appendAudioSampleBuffer:sampleBuffer];
+				[_recorder appendAudioSampleBuffer:sampleBuffer];
 			}
 		}
 	}
@@ -672,23 +525,49 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 		}
 	}
 	
-	@synchronized( self )
+	if ( renderedPixelBuffer )
 	{
-		if ( renderedPixelBuffer )
+		@synchronized( self )
 		{
 			[self outputPreviewPixelBuffer:renderedPixelBuffer];
 			
 			if ( _recordingStatus == RosyWriterRecordingStatusRecording ) {
-				[self.recorder appendVideoPixelBuffer:renderedPixelBuffer withPresentationTime:timestamp];
+				[_recorder appendVideoPixelBuffer:renderedPixelBuffer withPresentationTime:timestamp];
 			}
-			
-			CFRelease( renderedPixelBuffer );
 		}
-		else
-		{
-			[self videoPipelineDidRunOutOfBuffers];
-		}
+		
+		CFRelease( renderedPixelBuffer );
 	}
+	else
+	{
+		[self videoPipelineDidRunOutOfBuffers];
+	}
+}
+
+// call under @synchronized( self )
+- (void)outputPreviewPixelBuffer:(CVPixelBufferRef)previewPixelBuffer
+{
+	// Keep preview latency low by dropping stale frames that have not been picked up by the delegate yet
+	// Note that access to currentPreviewPixelBuffer is protected by the @synchronized lock
+	self.currentPreviewPixelBuffer = previewPixelBuffer;
+	
+	[self invokeDelegateCallbackAsync:^{
+		
+		CVPixelBufferRef currentPreviewPixelBuffer = NULL;
+		@synchronized( self )
+		{
+			currentPreviewPixelBuffer = self.currentPreviewPixelBuffer;
+			if ( currentPreviewPixelBuffer ) {
+				CFRetain( currentPreviewPixelBuffer );
+				self.currentPreviewPixelBuffer = NULL;
+			}
+		}
+		
+		if ( currentPreviewPixelBuffer ) {
+			[_delegate capturePipeline:self previewPixelBufferReadyForDisplay:currentPreviewPixelBuffer];
+			CFRelease( currentPreviewPixelBuffer );
+		}
+	}];
 }
 
 #pragma mark Recording
@@ -705,20 +584,17 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 		[self transitionToRecordingStatus:RosyWriterRecordingStatusStartingRecording error:nil];
 	}
 	
-	MovieRecorder *recorder = [[[MovieRecorder alloc] initWithURL:_recordingURL] autorelease];
+	dispatch_queue_t callbackQueue = dispatch_queue_create( "com.apple.sample.capturepipeline.recordercallback", DISPATCH_QUEUE_SERIAL ); // guarantee ordering of callbacks with a serial queue
+	MovieRecorder *recorder = [[MovieRecorder alloc] initWithURL:_recordingURL delegate:self callbackQueue:callbackQueue];
 	
 #if RECORD_AUDIO
 	[recorder addAudioTrackWithSourceFormatDescription:self.outputAudioFormatDescription settings:_audioCompressionSettings];
 #endif // RECORD_AUDIO
-    
+	
 	CGAffineTransform videoTransform = [self transformFromVideoBufferOrientationToOrientation:self.recordingOrientation withAutoMirroring:NO]; // Front camera recording shouldn't be mirrored
 
 	[recorder addVideoTrackWithSourceFormatDescription:self.outputVideoFormatDescription transform:videoTransform settings:_videoCompressionSettings];
-	
-	dispatch_queue_t callbackQueue = dispatch_queue_create( "com.apple.sample.capturepipeline.recordercallback", DISPATCH_QUEUE_SERIAL ); // guarantee ordering of callbacks with a serial queue
-	[recorder setDelegate:self callbackQueue:callbackQueue];
-	[callbackQueue release];
-	self.recorder = recorder;
+	_recorder = recorder;
 	
 	[recorder prepareToRecord]; // asynchronous, will call us back with recorderDidFinishPreparing: or recorder:didFailWithError: when done
 }
@@ -734,7 +610,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 		[self transitionToRecordingStatus:RosyWriterRecordingStatusStoppingRecording error:nil];
 	}
 	
-	[self.recorder finishRecording]; // asynchronous, will call us back with recorderDidFinishRecording: or recorder:didFailWithError: when done
+	[_recorder finishRecording]; // asynchronous, will call us back with recorderDidFinishRecording: or recorder:didFailWithError: when done
 }
 
 #pragma mark MovieRecorder Delegate
@@ -754,8 +630,9 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 
 - (void)movieRecorder:(MovieRecorder *)recorder didFailWithError:(NSError *)error
 {
-	@synchronized( self ) {
-		self.recorder = nil;
+	@synchronized( self )
+	{
+		_recorder = nil;
 		[self transitionToRecordingStatus:RosyWriterRecordingStatusIdle error:error];
 	}
 }
@@ -773,14 +650,15 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 		// We will be stopped once we save to the assets library.
 	}
 	
-	self.recorder = nil;
+	_recorder = nil;
 	
 	ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
 	[library writeVideoAtPathToSavedPhotosAlbum:_recordingURL completionBlock:^(NSURL *assetURL, NSError *error) {
 		
 		[[NSFileManager defaultManager] removeItemAtURL:_recordingURL error:NULL];
 		
- 		@synchronized( self ) {
+ 		@synchronized( self )
+		{
 			if ( _recordingStatus != RosyWriterRecordingStatusStoppingRecording ) {
 				@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Expected to be in StoppingRecording state" userInfo:nil];
 				return;
@@ -788,7 +666,6 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 			[self transitionToRecordingStatus:RosyWriterRecordingStatusIdle error:error];
 		}
 	}];
-	[library release];
 }
 
 #pragma mark Recording State Machine
@@ -796,7 +673,6 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 // call under @synchonized( self )
 - (void)transitionToRecordingStatus:(RosyWriterRecordingStatus)newStatus error:(NSError *)error
 {
-	SEL delegateSelector = NULL;
 	RosyWriterRecordingStatus oldStatus = _recordingStatus;
 	_recordingStatus = newStatus;
 	
@@ -806,38 +682,29 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	
 	if ( newStatus != oldStatus )
 	{
+		dispatch_block_t delegateCallbackBlock = nil;
+		
 		if ( error && ( newStatus == RosyWriterRecordingStatusIdle ) )
 		{
-			delegateSelector = @selector(capturePipeline:recordingDidFailWithError:);
+			delegateCallbackBlock = ^{ [_delegate capturePipeline:self recordingDidFailWithError:error]; };
 		}
 		else
 		{
-			error = nil; // only the above delegate method takes an error
 			if ( ( oldStatus == RosyWriterRecordingStatusStartingRecording ) && ( newStatus == RosyWriterRecordingStatusRecording ) ) {
-				delegateSelector = @selector(capturePipelineRecordingDidStart:);
+				delegateCallbackBlock = ^{ [_delegate capturePipelineRecordingDidStart:self]; };
 			}
 			else if ( ( oldStatus == RosyWriterRecordingStatusRecording ) && ( newStatus == RosyWriterRecordingStatusStoppingRecording ) ) {
-				delegateSelector = @selector(capturePipelineRecordingWillStop:);
+				delegateCallbackBlock = ^{ [_delegate capturePipelineRecordingWillStop:self]; };
 			}
 			else if ( ( oldStatus == RosyWriterRecordingStatusStoppingRecording ) && ( newStatus == RosyWriterRecordingStatusIdle ) ) {
-				delegateSelector = @selector(capturePipelineRecordingDidStop:);
+				delegateCallbackBlock = ^{ [_delegate capturePipelineRecordingDidStop:self]; };
 			}
 		}
-	}
-	
-	if ( delegateSelector && self.delegate )
-	{
-		dispatch_async( _delegateCallbackQueue, ^{
-			@autoreleasepool
-			{
-				if ( error ) {
-					[self.delegate performSelector:delegateSelector withObject:self withObject:error];
-				}
-				else {
-					[self.delegate performSelector:delegateSelector withObject:self];
-				}
-			}
-		} );
+		
+		if ( delegateCallbackBlock )
+		{
+			[self invokeDelegateCallbackAsync:delegateCallbackBlock];
+		}
 	}
 }
 
@@ -872,6 +739,15 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 
 #pragma mark Utilities
 
+- (void)invokeDelegateCallbackAsync:(dispatch_block_t)callbackBlock
+{
+	dispatch_async( _delegateCallbackQueue, ^{
+		@autoreleasepool {
+			callbackBlock();
+		}
+	} );
+}
+
 // Auto mirroring: Front camera is mirrored; back camera isn't 
 - (CGAffineTransform)transformFromVideoBufferOrientationToOrientation:(AVCaptureVideoOrientation)orientation withAutoMirroring:(BOOL)mirror
 {
@@ -879,7 +755,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 		
 	// Calculate offsets from an arbitrary reference orientation (portrait)
 	CGFloat orientationAngleOffset = angleOffsetFromPortraitOrientationToOrientation( orientation );
-	CGFloat videoOrientationAngleOffset = angleOffsetFromPortraitOrientationToOrientation( self.videoOrientation );
+	CGFloat videoOrientationAngleOffset = angleOffsetFromPortraitOrientationToOrientation( _videoBufferOrientation );
 	
 	// Find the difference in angle between the desired orientation and the video orientation
 	CGFloat angleOffset = orientationAngleOffset - videoOrientationAngleOffset;
@@ -891,7 +767,7 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 			transform = CGAffineTransformScale( transform, -1, 1 );
 		}
 		else {
-			if ( UIInterfaceOrientationIsPortrait( orientation ) ) {
+			if ( UIInterfaceOrientationIsPortrait( (UIInterfaceOrientation)orientation ) ) {
 				transform = CGAffineTransformRotate( transform, M_PI );
 			}
 		}
@@ -936,7 +812,8 @@ static CGFloat angleOffsetFromPortraitOrientationToOrientation(AVCaptureVideoOri
 		[_previousSecondTimestamps removeObjectAtIndex:0];
 	}
 	
-	if ( [_previousSecondTimestamps count] > 1 ) {
+	if ( [_previousSecondTimestamps count] > 1 )
+	{
 		const Float64 duration = CMTimeGetSeconds( CMTimeSubtract( [[_previousSecondTimestamps lastObject] CMTimeValue], [_previousSecondTimestamps[0] CMTimeValue] ) );
 		const float newRate = (float)( [_previousSecondTimestamps count] - 1 ) / duration;
 		self.videoFrameRate = newRate;

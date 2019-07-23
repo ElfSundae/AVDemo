@@ -1,48 +1,9 @@
 /*
-	    File: RosyWriterCIFilterRenderer.m
-	Abstract: The RosyWriter CoreImage CIFilter-based effect renderer
-	 Version: 2.1
+	Copyright (C) 2016 Apple Inc. All Rights Reserved.
+	See LICENSE.txt for this sample’s licensing information
 	
-	Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
-	Inc. ("Apple") in consideration of your agreement to the following
-	terms, and your use, installation, modification or redistribution of
-	this Apple software constitutes acceptance of these terms.  If you do
-	not agree with these terms, please do not use, install, modify or
-	redistribute this Apple software.
-	
-	In consideration of your agreement to abide by the following terms, and
-	subject to these terms, Apple grants you a personal, non-exclusive
-	license, under Apple's copyrights in this original Apple software (the
-	"Apple Software"), to use, reproduce, modify and redistribute the Apple
-	Software, with or without modifications, in source and/or binary forms;
-	provided that if you redistribute the Apple Software in its entirety and
-	without modifications, you must retain this notice and the following
-	text and disclaimers in all such redistributions of the Apple Software.
-	Neither the name, trademarks, service marks or logos of Apple Inc. may
-	be used to endorse or promote products derived from the Apple Software
-	without specific prior written permission from Apple.  Except as
-	expressly stated in this notice, no other rights or licenses, express or
-	implied, are granted by Apple herein, including but not limited to any
-	patent rights that may be infringed by your derivative works or by other
-	works in which the Apple Software may be incorporated.
-	
-	The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
-	MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
-	THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
-	FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
-	OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
-	
-	IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
-	OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-	SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-	INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
-	MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
-	AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
-	STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
-	POSSIBILITY OF SUCH DAMAGE.
-	
-	Copyright (C) 2014 Apple Inc. All Rights Reserved.
-	
+	Abstract:
+	The RosyWriter CoreImage CIFilter-based effect renderer
  */
 
 #import "RosyWriterCIFilterRenderer.h"
@@ -66,7 +27,6 @@
 - (void)dealloc
 {
 	[self deleteBuffers];
-	[super dealloc];
 }
 
 #pragma mark RosyWriterRenderer
@@ -93,10 +53,9 @@
 	
 	_rgbColorSpace = CGColorSpaceCreateDeviceRGB();
 	EAGLContext *eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-	_ciContext = [[CIContext contextWithEAGLContext:eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]} ] retain];
-	[eaglContext release];
+	_ciContext = [CIContext contextWithEAGLContext:eaglContext options:@{ kCIContextWorkingColorSpace : [NSNull null] } ];
 	
-	_rosyFilter = [[CIFilter filterWithName:@"CIColorMatrix"] retain];
+	_rosyFilter = [CIFilter filterWithName:@"CIColorMatrix"];
 	CGFloat greenCoefficients[4] = { 0, 0, 0, 0 };
 	[_rosyFilter setValue:[CIVector vectorWithValues:greenCoefficients count:4] forKey:@"inputGVector"];
 }
@@ -118,7 +77,7 @@
 	
 	err = CVPixelBufferPoolCreatePixelBuffer( kCFAllocatorDefault, _bufferPool, &renderedOutputPixelBuffer );
 	if ( err ) {
-		NSLog(@"Cannot obtain a pixel buffer from the buffer pool (%d)", (int)err );
+		NSLog( @"Cannot obtain a pixel buffer from the buffer pool (%d)", (int)err );
 		goto bail;
 	}
 	
@@ -126,7 +85,7 @@
 	[_ciContext render:filteredImage toCVPixelBuffer:renderedOutputPixelBuffer bounds:[filteredImage extent] colorSpace:_rgbColorSpace];
 
 bail:
-	[sourceImage release];
+	
 	return renderedOutputPixelBuffer;
 }
 
@@ -185,18 +144,13 @@ bail:
 		CFRelease( _outputFormatDescription );
 		_outputFormatDescription = NULL;
 	}
-	if ( _ciContext ) {
-		[_ciContext release];
-		_ciContext = nil;
-	}
-	if ( _rosyFilter ) {
-		[_rosyFilter release];
-		_rosyFilter = nil;
-	}
 	if ( _rgbColorSpace ) {
 		CFRelease( _rgbColorSpace );
 		_rgbColorSpace = NULL;
 	}
+	
+	_ciContext = nil;
+	_rosyFilter = nil;
 }
 
 static CVPixelBufferPoolRef createPixelBufferPool( int32_t width, int32_t height, OSType pixelFormat, int32_t maxBufferCount )
@@ -207,11 +161,11 @@ static CVPixelBufferPoolRef createPixelBufferPool( int32_t width, int32_t height
 												(id)kCVPixelBufferWidthKey : @(width),
 												(id)kCVPixelBufferHeightKey : @(height),
 												(id)kCVPixelFormatOpenGLESCompatibility : @(YES),
-												(id)kCVPixelBufferIOSurfacePropertiesKey : @{} };
+												(id)kCVPixelBufferIOSurfacePropertiesKey : @{ /*empty dictionary*/ } };
 	
 	NSDictionary *pixelBufferPoolOptions = @{ (id)kCVPixelBufferPoolMinimumBufferCountKey : @(maxBufferCount) };
 
-	CVPixelBufferPoolCreate( kCFAllocatorDefault, (CFDictionaryRef)pixelBufferPoolOptions, (CFDictionaryRef)sourcePixelBufferOptions, &outputPool );
+	CVPixelBufferPoolCreate( kCFAllocatorDefault, (__bridge CFDictionaryRef)pixelBufferPoolOptions, (__bridge CFDictionaryRef)sourcePixelBufferOptions, &outputPool );
 
 	return outputPool;
 }
@@ -220,7 +174,7 @@ static CFDictionaryRef createPixelBufferPoolAuxAttributes( int32_t maxBufferCoun
 {
 	// CVPixelBufferPoolCreatePixelBufferWithAuxAttributes() will return kCVReturnWouldExceedAllocationThreshold if we have already vended the max number of buffers
 	NSDictionary *auxAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:@(maxBufferCount), (id)kCVPixelBufferPoolAllocationThresholdKey, nil];
-	return (CFDictionaryRef)auxAttributes;
+	return CFBridgingRetain( auxAttributes );
 }
 
 static void preallocatePixelBuffersInPool( CVPixelBufferPoolRef pool, CFDictionaryRef auxAttributes )
@@ -237,10 +191,9 @@ static void preallocatePixelBuffersInPool( CVPixelBufferPoolRef pool, CFDictiona
 		}
 		assert( err == noErr );
 		
-		[pixelBuffers addObject:(id)pixelBuffer];
-		CFRelease( pixelBuffer );
+		[pixelBuffers addObject:CFBridgingRelease( pixelBuffer )];
 	}
-	[pixelBuffers release];
+	[pixelBuffers removeAllObjects];
 }
 
 @end
