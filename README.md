@@ -78,6 +78,10 @@ Note: The sample has been developed for iPhones 4S and above/iPods with 4-inch d
 
 The AVFoundationExporter sample demonstrates how to export and transcode movie files, add metadata to movie files, and filter existing metadata in movie files using the AVAssetExportSession class.
 
+### AVFoundationQueuePlayer-iOS: Using a Mixture of Local File Based Assets and HTTP Live Streaming Assets with AVFoundation
+
+Demonstrates how to create a movie queue playback app using only the AVQueuePlayer and AVPlayerLayer classes of AVFoundation (not AVKit). You’ll find out how to manage a queue compromised of local, HTTP-live-streamed, and progressive-download movies. You’ll also see how to implement play, pause, skip, volume adjustment, time slider updating, and scrubbing.
+
 ### AVFoundationSimplePlayer-iOS: Using AVFoundation to Play Media
 
 Demonstrates how to create a simple movie playback app using only the AVPlayer and AVPlayerLayer classes from AVFoundation (not AVKit). You'll see how to open a movie file and then how to implement various functionality including play, pause, fast forward, rewind, volume adjustment, time slider updating, and scrubbing.
