@@ -8,6 +8,16 @@ Sample application that uses the MTAudioProcessingTap in combination with AV Fou
 
 *Note:* The sample requires at least one video asset in the Asset Library (Camera Roll) to use as the source media. It will automatically select the first one it finds.
 
+### AVAEMixerSample: Using AVAudioEngine for Playback, Mixing and Recording
+
+AVAEMixerSample demonstrates playback, recording and mixing using AVAudioEngine.
+
+* Uses AVAudioFile and AVAudioPCMBuffer objects with a AVAudioPlayerNode to play audio.
+* Creates an AVAudioSequencer to play MIDI files using the AVAudioUnitSampler instrument.
+* Illustrates one-to-many connections (AVAudioConnectionPoint) using the connect:toConnectionPoints: API.
+* Demonstrates connecting and applying effects using both the AVAudioUnitReverb and AVAudioUnitDistortion.
+* Captures mixed or processed audio to a file via a node tap.
+
 ### AVAutoWait: Using AVFoundation to play HTTP assets with minimal stalls
 
 This sample demonstrates how to use automatic waiting to deal with bandwidth limitations when playing HTTP live-streamed and progressive-download movies. This sample highlights what properties you should consider and how automatic waiting affects your user interface.
@@ -168,16 +178,6 @@ A frame rate of 5 fps means that 5 still images will result in a 1 second long m
 ### UIImagePicker Video Recorder
 
 Demonstrates how to create a custom UI for the camera variant of the UIImagePickerController and how to programmatically control video recording.
-
-### Using AVAudioEngine for Playback, Mixing and Recording (AVAEMixerSample)
-
-AVAEMixerSample demonstrates playback, recording and mixing using AVAudioEngine.
-
-* Uses AVAudioFile and AVAudioPCMBuffer objects with a AVAudioPlayerNode to play audio.
-* Creates an AVAudioSequencer to play MIDI files using the AVAudioUnitSampler instrument.
-* Illustrates one-to-many connections (AVAudioConnectionPoint) using the connect:toConnectionPoints: API.
-* Demonstrates connecting and applying effects using both the AVAudioUnitReverb and AVAudioUnitDistortion.
-* Captures mixed or processed audio to a file via a node tap.
 
 ### VideoEditing-Final2
 
