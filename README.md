@@ -61,6 +61,26 @@ The project includes a different target for each of the different processing pip
 
 A simple AV Foundation based movie editing application for iOS.
 
+### avTouch
+
+The avTouch sample demonstrates use of the AVAudioPlayer class for basic audio playback.
+
+The code in avTouch uses the AV Foundation framework to play a file containing AAC audio data. The application uses Core Graphics and OpenGL to display sound volume meters during playback.
+
+This application shows how to:
+
+* Create an AVAudioPlayer object from an input audio file.
+
+* Use OpenGL and Core Graphics to display metering levels.
+
+* Use Audio Session Services to set an appropriate audio session category for playback.
+
+* Use the AVAudioPlayer interruption delegate methods to pause playback upon receiving an interruption, and to then resume playback if the interruption ends.
+
+* Demonstrates a technique to perform Fast Forward and Rewind
+
+avTouch does not demonstrate how to play multiple files, nor does it demonstrate more advanced use of AV Foundation.
+
 ### AVCustomEdit
 
 AVCustomEdit is a simple AVFoundation based movie editing application demonstrating custom compositing to add transitions. The sample demonstrates the use of custom compositors to add transitions to an AVMutableComposition. It implements the AVVideoCompositing and AVVideoCompositionInstruction protocols to have access to individual source frames, which are then be rendered using OpenGL off screen rendering.
