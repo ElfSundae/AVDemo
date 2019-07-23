@@ -8,6 +8,10 @@ Sample application that uses the MTAudioProcessingTap in combination with AV Fou
 
 *Note:* The sample requires at least one video asset in the Asset Library (Camera Roll) to use as the source media. It will automatically select the first one it finds.
 
+### AVAutoWait: Using AVFoundation to play HTTP assets with minimal stalls
+
+This sample demonstrates how to use automatic waiting to deal with bandwidth limitations when playing HTTP live-streamed and progressive-download movies. This sample highlights what properties you should consider and how automatic waiting affects your user interface.
+
 ### AVBasicVideoOutput
 
 The AVBasicVideoOutput This sample shows how to perform **real-time video processing** using `AVPlayerItemVideoOutput` and how to optimally display processed video frames on screen using CAEAGLLayer and CADisplayLink. It uses simple math to adjust the luma and chroma values of pixels in every video frame in real time.
