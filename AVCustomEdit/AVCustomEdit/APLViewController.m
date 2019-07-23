@@ -1,54 +1,15 @@
 /*
-     File: APLViewController.m
- Abstract: UIViewController subclasses which handles setup, playback and export of AVMutableComposition along with other user interactions like scrubbing, toggling play/pause, selecting transition type.
-  Version: 1.2
+ Copyright (C) 2017 Apple Inc. All Rights Reserved.
+ See LICENSE.txt for this sample’s licensing information
  
- Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
- Inc. ("Apple") in consideration of your agreement to the following
- terms, and your use, installation, modification or redistribution of
- this Apple software constitutes acceptance of these terms.  If you do
- not agree with these terms, please do not use, install, modify or
- redistribute this Apple software.
- 
- In consideration of your agreement to abide by the following terms, and
- subject to these terms, Apple grants you a personal, non-exclusive
- license, under Apple's copyrights in this original Apple software (the
- "Apple Software"), to use, reproduce, modify and redistribute the Apple
- Software, with or without modifications, in source and/or binary forms;
- provided that if you redistribute the Apple Software in its entirety and
- without modifications, you must retain this notice and the following
- text and disclaimers in all such redistributions of the Apple Software.
- Neither the name, trademarks, service marks or logos of Apple Inc. may
- be used to endorse or promote products derived from the Apple Software
- without specific prior written permission from Apple.  Except as
- expressly stated in this notice, no other rights or licenses, express or
- implied, are granted by Apple herein, including but not limited to any
- patent rights that may be infringed by your derivative works or by other
- works in which the Apple Software may be incorporated.
- 
- The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
- MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
- THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
- FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
- OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
- 
- IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
- OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
- MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
- AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
- STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
- POSSIBILITY OF SUCH DAMAGE.
- 
- Copyright (C) 2014 Apple Inc. All Rights Reserved.
- 
+ Abstract:
+ UIViewController subclasses which handles setup, playback and export of AVMutableComposition along with other user interactions like scrubbing, toggling play/pause, selecting transition type.
  */
 
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CoreMedia.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <Photos/Photos.h>
 
 #import "APLViewController.h"
 #import "APLSimpleEditor.h"
@@ -61,7 +22,6 @@
 @property (nonatomic, strong) AVPlayer *player;
 
 @end
-
 
 
 @implementation APLPlayerView
@@ -82,8 +42,6 @@
 }
 
 @end
-/*
- */
 
 static NSString* const AVCustomEditPlayerViewControllerStatusObservationContext	= @"AVCustomEditPlayerViewControllerStatusObservationContext";
 static NSString* const AVCustomEditPlayerViewControllerRateObservationContext = @"AVCustomEditPlayerViewControllerRateObservationContext";
@@ -96,8 +54,6 @@ static NSString* const AVCustomEditPlayerViewControllerRateObservationContext = 
 
 @property AVPlayer				*player;
 @property AVPlayerItem			*playerItem;
-
-@property UIPopoverController	*popover;
 
 - (void)updatePlayPauseButton;
 - (void)updateScrubber;
@@ -201,10 +157,14 @@ static NSString* const AVCustomEditPlayerViewControllerRateObservationContext = 
 	if ([segue.identifier isEqualToString:@"Transition"])
 	{
 		// Setup transition type picker controller before it is shown.
-		APLTransitionTypeController *transitionTypePickerController = (APLTransitionTypeController *)((UINavigationController *)segue.destinationViewController).topViewController;
-		if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-			self.popover = [(UIStoryboardPopoverSegue *)segue popoverController];
-		}
+        APLTransitionTypeController *transitionTypePickerController = segue.destinationViewController;
+        UIPopoverPresentationController *controller = transitionTypePickerController.popoverPresentationController;
+        /*
+         This will cause the 'adaptivePresentationStyleForPresentationController' and
+         'viewControllerForAdaptivePresentationStyle' functions to be called.
+         */
+        controller.delegate = self;
+
 		transitionTypePickerController.delegate = self;
 		transitionTypePickerController.currentTransition = _transitionType;
 		if (_transitionType == kCrossDissolveTransition) {
@@ -221,13 +181,48 @@ static NSString* const AVCustomEditPlayerViewControllerRateObservationContext = 
 	}
 }
 
+// Called when the Set Transition view controller 'Done' button is pressed.
+- (void)doneAction:(id)sender
+{
+    // Dismiss the view controller that was presented.
+    [self dismissViewControllerAnimated:YES completion:^{
+        //.. done
+    }];
+}
+
+// Specify the presentation style to use (called for iPhone only).
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller
+{
+    return UIModalPresentationFullScreen;
+}
+
+/*
+ Present/wrap the view controller in a navigation controller (for iPhone/compact).
+ If this method is not implemented, or returns nil, then the originally presented view controller is used.
+ */
+- (UIViewController *)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style
+{
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
+
+    UIViewController *presentedViewController = controller.presentedViewController;
+    if (presentedViewController != nil)
+    {
+        presentedViewController.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                      target:self
+                                                      action:@selector(doneAction:)];
+    }
+
+    return navController;
+}
+
 #pragma mark - Simple Editor
 
 - (void)setupEditingAndPlayback
 {
 	AVURLAsset *asset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip1" ofType:@"m4v"]]];
 	AVURLAsset *asset2 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip2" ofType:@"mov"]]];
-	
+
 	dispatch_group_t dispatchGroup = dispatch_group_create();
 	NSArray *assetKeysToLoadAndTest = @[@"tracks", @"duration", @"composable"];
 	
@@ -479,13 +474,21 @@ bail:
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (error) {
-			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error localizedDescription]
-																message:[error localizedRecoverySuggestion]
-															   delegate:nil
-													  cancelButtonTitle:NSLocalizedString(@"OK", nil)
-													  otherButtonTitles:nil];
+            NSString *title = NSLocalizedString(@"An Error Occurred", nil);
+            NSString *message = [error localizedDescription];
+            NSString *cancelButtonTitle = NSLocalizedString(@"OK", nil);
 
-			[alertView show];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+
+            // Create the action.
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                NSLog(@"The simple alert's cancel action occured.");
+            }];
+
+            // Add the action.
+            [alertController addAction:cancelAction];
+
+            [self presentViewController:alertController animated:YES completion:nil];
 		}
 	});
 }
@@ -559,7 +562,7 @@ bail:
 /* Called when the player item has played to its end time. */
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
-	/* After the movie has played to its end time, seek back to time zero to play it again. */
+	// After the movie has played to its end time, seek back to time zero to play it again.
 	_seekToZeroBeforePlaying = YES;
 }
 
@@ -588,7 +591,11 @@ bail:
 	NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"ExportedProject.mov"];
 	[[NSFileManager defaultManager] removeItemAtPath:filePath error:NULL];
 	
-	// If a preset that is not compatible with AVFileTypeQuickTimeMovie is used, one can use -[AVAssetExportSession supportedFileTypes] to obtain a supported file type for the output file and UTTypeCreatePreferredIdentifierForTag to obtain an appropriate path extension for the output file type.
+	/*
+     If a preset that is not compatible with AVFileTypeQuickTimeMovie is used, one can use 
+     -[AVAssetExportSession supportedFileTypes] to obtain a supported file type for the output file and 
+     UTTypeCreatePreferredIdentifierForTag to obtain an appropriate path extension for the output file type.
+    */
 	session.outputURL = [NSURL fileURLWithPath:filePath];
 	session.outputFileType = AVFileTypeQuickTimeMovie;
 	
@@ -623,21 +630,82 @@ bail:
 	
 	_exportProgressView.progress = 1.0;
 	
-	// Save the exported movie to the camera roll
-	ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-	[library writeVideoAtPathToSavedPhotosAlbum:outputURL completionBlock:^(NSURL *assetURL, NSError *error) {
-		if (error != NULL) {
-			NSLog(@"writeVideoToAssestsLibrary failed: %@", error);
-			[self reportError:error];
-		}
-	}];
-	
+    /*
+     Save the exported movie to the camera roll.
+     Check authorization status.
+     */
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        if ( status == PHAuthorizationStatusAuthorized ) {
+            dispatch_async( dispatch_get_main_queue(), ^{
+                // Save the movie file to the photo library and cleanup.
+                [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                    /* 
+                     In iOS 9 and later, it's possible to move the file into the photo library without duplicating 
+                     the file data. This avoids using double the disk space during save, which can make a difference
+                     on devices with limited free disk space.
+                    */
+                    PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions alloc] init];
+                    options.shouldMoveFile = YES;
+
+                    PHAssetCreationRequest *creationRequest = [PHAssetCreationRequest creationRequestForAsset];
+                    [creationRequest addResourceWithType:PHAssetResourceTypeVideo fileURL:outputURL options:options];
+                } completionHandler:^( BOOL success, NSError *error ) {
+                    if ( ! success ) {
+                        NSLog( @"Could not save movie to photo library due to error: %@", error );
+                    }
+                }];
+
+            } );
+        }
+        else {
+            dispatch_async( dispatch_get_main_queue(), ^{
+                NSString *message = NSLocalizedString( @"AVCustomEdit doesn't have permission to the photo library, please change privacy settings", @"Alert message when the user has denied access to the photo library" );
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"AVCustomEdit" message:message preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"Alert OK button") style:UIAlertActionStyleCancel handler:nil]];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Settings", @"Alert button to open Settings") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+                }]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            } );
+        }
+    }];
+
 	[self.player play];
 	[self.playPauseButton setEnabled:YES];
 	[self.transitionButton setEnabled:YES];
 	[self.scrubber setEnabled:YES];
 	[self.exportButton setEnabled:YES];
 }
+
+- (IBAction)setTransition:(id)sender
+{
+    // Show the view controller as a popover (iPad) or as a modal view controller (iPhone / iPhone Plus).
+    APLTransitionTypeController *contentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SetTransition"];
+    assert(contentVC != nil);
+
+    contentVC.edgesForExtendedLayout = UIRectEdgeNone;
+    contentVC.modalPresentationStyle = UIModalPresentationPopover;
+    UIPopoverPresentationController *presentationController = contentVC.popoverPresentationController;
+
+    // Display popover from the UIButton (sender) as the anchor.
+    presentationController.sourceRect = [sender frame];
+    UIButton *button = (UIButton *)sender;
+    presentationController.sourceView = button.superview;
+
+    presentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+
+    /*
+     Present content view controller in a compact screen so that it can be dismissed as a full screen
+     view controller.
+     */
+    presentationController.delegate = self;
+
+    // Present the view controller modally.
+    [self presentViewController:contentVC animated:YES completion:^{
+        //.. done
+    }];
+}
+
 
 #pragma mark - Gesture recognizer delegate
 
@@ -659,11 +727,7 @@ bail:
 	// Let the editor know of the change in transition type.
 	[self synchronizeWithEditor];
 	
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		[self.popover dismissPopoverAnimated:YES];
-	} else {
-		[self dismissViewControllerAnimated:YES completion:nil];
-	}
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
