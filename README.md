@@ -116,6 +116,10 @@ performance when using the AVCaptureOutput as an OpenGL texture. In addition, a
 ripple effect is applied by modifying the texture coordinates of a densely
 tessellated quad.
 
+### Real-time Video Processing Using AVPlayerItemVideoOutput
+
+AVBasicVideoOutput demonstrates how to perform real-time video processing using AVPlayerItemVideoOutput and how to display processed video frames on screen using CAEAGLLayer and CADisplayLink. AVPlayerItemVideoOutput provides sample buffers (CVPixelBufferRef) which are then adjusted for their luma (Y) and chroma (UV) values based on the input from a user via UISliders. These processed pixel buffers are then rendered to a CAEAGLLayer.
+
 ### RosyWriter
 
 Capture, process, preview, and save video using AV Foundation using various processing pipelines.
@@ -164,6 +168,16 @@ A frame rate of 5 fps means that 5 still images will result in a 1 second long m
 ### UIImagePicker Video Recorder
 
 Demonstrates how to create a custom UI for the camera variant of the UIImagePickerController and how to programmatically control video recording.
+
+### Using AVAudioEngine for Playback, Mixing and Recording (AVAEMixerSample)
+
+AVAEMixerSample demonstrates playback, recording and mixing using AVAudioEngine.
+
+* Uses AVAudioFile and AVAudioPCMBuffer objects with a AVAudioPlayerNode to play audio.
+* Creates an AVAudioSequencer to play MIDI files using the AVAudioUnitSampler instrument.
+* Illustrates one-to-many connections (AVAudioConnectionPoint) using the connect:toConnectionPoints: API.
+* Demonstrates connecting and applying effects using both the AVAudioUnitReverb and AVAudioUnitDistortion.
+* Captures mixed or processed audio to a file via a node tap.
 
 ### VideoEditing-Final2
 
