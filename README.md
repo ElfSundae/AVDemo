@@ -67,6 +67,12 @@ AVCustomEdit is a simple AVFoundation based movie editing application demonstrat
 
 Note: The sample has been developed for iPhones 4S and above/iPods with 4-inch display and iPads. These developed transitions are not supported on simulator.
 
+### AVLoupe
+
+This sample demonstrates how to use multiple synchronized AVPlayerLayer instances, associated with a single AVPlayer, to efficiently produce non-trivial presentation of timed visual media. Using just one AVPlayer this sample demonstrates how you can display the same video in multiple AVPlayerLayers simultaneously. With minimal code you can create very customized and creative forms of video display. As an example, this sample demonstrates an interactive loupe, or magnifying glass, for video playback. This is similar to features that you might have used in iPhoto and Aperture.
+
+This sample was explored in the WWDC 2012 session 517: Real-Time Media Effects and Processing during Playback. <https://developer.apple.com/library/ios/samplecode/AVLoupe/>
+
 ### VideoEditing-Final2
 
 From [AVFoundation Tutorial: Adding Overlays and Animations to Videos](http://www.raywenderlich.com/30200/avfoundation-tutorial-adding-overlays-and-animations-to-videos)

@@ -1,0 +1,17 @@
+/*
+ Copyright (C) 2016 Apple Inc. All Rights Reserved.
+ See LICENSE.txt for this sample’s licensing information
+ 
+ Abstract:
+ Prefix header for all source files of the 'AVLoupe' target in the 'AVLoupe' project
+ */
+#import <Availability.h>
+
+#ifndef __IPHONE_6_0
+#warning "This project uses features only available in iOS SDK 6.0 and later."
+#endif
+
+#ifdef __OBJC__
+	#import <UIKit/UIKit.h>
+	#import <Foundation/Foundation.h>
+#endif
