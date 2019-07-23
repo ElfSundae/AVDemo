@@ -48,7 +48,6 @@
 #import <CoreVideo/CVOpenGLESTextureCache.h>
 #import "RippleViewController.h"
 #import "RippleModel.h"
-#import <OpenGLES/ES2/glext.h>
 
 // Uniform index.
 enum
