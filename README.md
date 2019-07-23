@@ -125,6 +125,10 @@ Uses AVPlayer to play videos from the iPod Library, Camera Roll, or via iTunes F
 
 A simple AV Foundation based movie editing application for iOS.
 
+### AVTimedAnnotationWriter: Using Custom Annotation Metadata for Movie Writing and Playback
+
+Demonstrates how to use the AVAssetWriterInputMetadataAdaptor API to write circle annotation metadata during video playback. The captured movie file has video, audio and metadata track. The metadata track contains circle annotation which is vended during playback using AVPlayerItemMetadataOutput.
+
 ### avTouch
 
 The avTouch sample demonstrates use of the AVAudioPlayer class for basic audio playback.
