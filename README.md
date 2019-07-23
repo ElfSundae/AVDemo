@@ -18,6 +18,12 @@ This sample demonstrates temporal synchronization of video with motion data from
 
 AVCamManual adds manual controls for focus, exposure, and white balance to the AVCam sample application.
 
+### AVCaptureToAudioUnit
+
+AVCaptureAudioDataOutput To AudioUnit iOS
+
+Demonstrates how to use the CMSampleBufferRefs vended by AVFoundation's capture AVCaptureAudioDataOutput object with various CoreAudio APIs.
+
 ### AVBasicVideoOutput
 
 The AVBasicVideoOutput This sample shows how to perform **real-time video processing** using `AVPlayerItemVideoOutput` and how to optimally display processed video frames on screen using CAEAGLLayer and CADisplayLink. It uses simple math to adjust the luma and chroma values of pixels in every video frame in real time.
