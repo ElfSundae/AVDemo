@@ -34,6 +34,12 @@ https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture
 
 Capture photos with depth data and record video using the front and rear iPhone and iPad cameras.
 
+### AVCamFilter: Applying Filters to a Capture Stream
+
+https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcamfilter_applying_filters_to_a_capture_stream?language=objc
+
+Render a capture stream with rose-colored filtering and depth effects.
+
 ### AVCamManual: Extending AVCam to Use Manual Capture API
 
 AVCamManual adds manual controls for focus, exposure, and white balance to the AVCam sample application.
