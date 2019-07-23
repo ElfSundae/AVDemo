@@ -31,7 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		28D8529516B880200065C6E1 /* ReadMe.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		28D8529516B880200065C6E1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EF1D1FD91627784E0030141F /* AVBasicVideoOutput.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVBasicVideoOutput.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF1D1FDD1627784E0030141F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EF1D1FDF1627784E0030141F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -84,14 +84,12 @@
 		EF1D1FCE1627784E0030141F = {
 			isa = PBXGroup;
 			children = (
-				28D8529516B880200065C6E1 /* ReadMe.txt */,
+				28D8529516B880200065C6E1 /* README.md */,
 				EF1D1FE71627784E0030141F /* AVBasicVideoOutput */,
 				EF1D1FDC1627784E0030141F /* Frameworks */,
 				EF1D1FDA1627784E0030141F /* Products */,
 			);
-			indentWidth = 4;
 			sourceTree = "<group>";
-			tabWidth = 4;
 		};
 		EF1D1FDA1627784E0030141F /* Products */ = {
 			isa = PBXGroup;
@@ -176,13 +174,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = AVVA;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Apple;
-				TargetAttributes = {
-					EF1D1FD81627784E0030141F = {
-						DevelopmentTeam = ZA562ZPM4Z;
-					};
-				};
 			};
 			buildConfigurationList = EF1D1FD31627784E0030141F /* Build configuration list for PBXProject "AVBasicVideoOutput" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -272,6 +265,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -316,12 +310,12 @@
 		EF1D20091627784E0030141F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVBasicVideoOutput/AVBasicVideoOutput-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/AVBasicVideoOutput/AVBasicVideoOutput-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.apple.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AVBasicVideoOutput;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
@@ -332,12 +326,12 @@
 		EF1D200A1627784E0030141F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVBasicVideoOutput/AVBasicVideoOutput-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/AVBasicVideoOutput/AVBasicVideoOutput-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.apple.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AVBasicVideoOutput;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;

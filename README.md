@@ -120,10 +120,6 @@ performance when using the AVCaptureOutput as an OpenGL texture. In addition, a
 ripple effect is applied by modifying the texture coordinates of a densely
 tessellated quad.
 
-### Real-time Video Processing Using AVPlayerItemVideoOutput
-
-AVBasicVideoOutput demonstrates how to perform real-time video processing using AVPlayerItemVideoOutput and how to display processed video frames on screen using CAEAGLLayer and CADisplayLink. AVPlayerItemVideoOutput provides sample buffers (CVPixelBufferRef) which are then adjusted for their luma (Y) and chroma (UV) values based on the input from a user via UISliders. These processed pixel buffers are then rendered to a CAEAGLLayer.
-
 ### RosyWriter
 
 Capture, process, preview, and save video using AV Foundation using various processing pipelines.
