@@ -92,6 +92,10 @@ Demonstrates how to create a simple movie playback app using only the AVPlayer a
 
 This OS X sample application uses AVPlayerItemVideoOutput in combination with a custom CIFilter to do basic chroma keying in real time.
 
+### AVLocationPlayer: Using AVFoundation Metadata Reading APIs
+
+AVLocationPlayer demonstrates how to use AVAssetReaderOutputMetadataAdaptor to read location metadata from a movie file containing this information. The location data is then plotted on MKMapView to present the location path where the video was recorded. This sample also shows the use of AVPlayerItemMetadataOutput to show current location on the drawn path during playback.
+
 ### AVLoupe
 
 This sample demonstrates how to use multiple synchronized AVPlayerLayer instances, associated with a single AVPlayer, to efficiently produce non-trivial presentation of timed visual media. Using just one AVPlayer this sample demonstrates how you can display the same video in multiple AVPlayerLayers simultaneously. With minimal code you can create very customized and creative forms of video display. As an example, this sample demonstrates an interactive loupe, or magnifying glass, for video playback. This is similar to features that you might have used in iPhoto and Aperture.
