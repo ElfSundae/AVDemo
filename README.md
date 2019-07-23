@@ -149,6 +149,10 @@ SquareCam demonstrates improvements to the AVCaptureStillImageOutput class in iO
 
 Note: This sample will not deliver any camera output on the iOS simulator.
 
+### StitchedStreamPlayer
+
+A simple AVFoundation demonstration of how timed metadata can be used to identify different content in a stream, supporting a custom seek UI.
+
 ### StopNGo
 
 StopNGo is a simple stop-motion animation QuickTime movie recorder that uses AVFoundation.

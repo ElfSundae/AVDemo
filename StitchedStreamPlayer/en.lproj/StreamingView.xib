@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment version="2048" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyStreamingMovieViewController">
+            <connections>
+                <outlet property="isPlayingAdText" destination="42" id="95"/>
+                <outlet property="movieTimeControl" destination="62" id="65"/>
+                <outlet property="movieURLTextField" destination="20" id="23"/>
+                <outlet property="playButton" destination="45" id="81"/>
+                <outlet property="playerLayerView" destination="54" id="55"/>
+                <outlet property="stopButton" destination="48" id="93"/>
+                <outlet property="toolBar" destination="52" id="94"/>
+                <outlet property="view" destination="17" id="24"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="17" userLabel="View">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="52" userLabel="Toolbar">
+                    <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <items/>
+                </toolbar>
+                <view contentMode="scaleToFill" id="54" customClass="MyPlayerLayerView">
+                    <rect key="frame" x="0.0" y="130" width="320" height="240"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Enter a valid movie URL:" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="none" minimumFontSize="10" id="18">
+                    <rect key="frame" x="64" y="23" width="191" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="19">
+                    <rect key="frame" x="101" y="82" width="119" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                    <state key="normal" title="Load Movie">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="disabled">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <state key="selected">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <connections>
+                        <action selector="loadMovieButtonPressed:" destination="-1" eventType="touchUpInside" id="40"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://devimages.apple.com/samplecode/adDemo/ad.m3u8" borderStyle="bezel" textAlignment="center" minimumFontSize="17" clearButtonMode="always" id="20">
+                    <rect key="frame" x="20" y="51" width="280" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="done"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="25"/>
+                    </connections>
+                </textField>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="10" id="42" userLabel="Ad is playing">
+                    <rect key="frame" x="4" y="391" width="312" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.75294125079999996" green="0.75294125079999996" blue="0.75294125079999996" alpha="1" colorSpace="deviceRGB"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+        <barButtonItem style="plain" systemItem="play" id="45">
+            <connections>
+                <action selector="play:" destination="-1" id="87"/>
+            </connections>
+        </barButtonItem>
+        <barButtonItem style="plain" systemItem="pause" id="48">
+            <connections>
+                <action selector="pause:" destination="-1" id="86"/>
+            </connections>
+        </barButtonItem>
+        <slider hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="62" userLabel="Horizontal Slider">
+            <rect key="frame" x="0.0" y="-6" width="270" height="29"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <action selector="beginScrubbing:" destination="-1" eventType="touchDown" id="90"/>
+                <action selector="endScrubbing:" destination="-1" eventType="touchUpInside" id="96"/>
+                <action selector="endScrubbing:" destination="-1" eventType="touchUpOutside" id="97"/>
+                <action selector="scrub:" destination="-1" eventType="valueChanged" id="88"/>
+                <action selector="scrub:" destination="-1" eventType="touchDragInside" id="98"/>
+            </connections>
+        </slider>
+    </objects>
+</document>
