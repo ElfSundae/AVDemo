@@ -121,6 +121,10 @@ in the following ways:
 
 Uses AVPlayer to play videos from the iPod Library, Camera Roll, or via iTunes File Sharing. Also displays metadata.
 
+### AVPlayerLooper: Using AVQueuePlayer and AVPlayerLooper to demonstrate loop playback
+
+This sample is a collection of projects showing how to play an audio visual item in a loop using AVFoundation's AVQueuePlayer and/or AVPlayerLooper.
+
 ### AVSimpleEditoriOS
 
 A simple AV Foundation based movie editing application for iOS.
