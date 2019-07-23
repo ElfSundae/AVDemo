@@ -48,6 +48,10 @@ Render a capture stream with rose-colored filtering and depth effects.
 
 AVCamManual adds manual controls for focus, exposure, and white balance to the AVCam sample application.
 
+### AVCaptureLocation: Using AVFoundation APIs to record a movie with location metadata
+
+This sample shows how to use AVAssetWriterInputMetadataAdaptor API to write timed location metadata, obtained from CoreLocation, during live video capture. The captured movie file has video, audio and metadata track. The metadata track contains location corresponding to where the video was recorded.
+
 ### AVCaptureToAudioUnit
 
 AVCaptureAudioDataOutput To AudioUnit iOS
