@@ -1,0 +1,376 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A65E171115517EEF0058E95B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65E171015517EEF0058E95B /* Cocoa.framework */; };
+		A65E171B15517EEF0058E95B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A65E171915517EEF0058E95B /* InfoPlist.strings */; };
+		A65E171D15517EEF0058E95B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A65E171C15517EEF0058E95B /* main.m */; };
+		A65E172415517EEF0058E95B /* GSDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = A65E172315517EEF0058E95B /* GSDocument.m */; };
+		A65E172715517EEF0058E95B /* GSDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = A65E172515517EEF0058E95B /* GSDocument.xib */; };
+		A65E172A15517EEF0058E95B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A65E172815517EEF0058E95B /* MainMenu.xib */; };
+		A65E173515517FAE0058E95B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65E173415517FAE0058E95B /* AVFoundation.framework */; };
+		A65E173715517FB90058E95B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65E173615517FB90058E95B /* QuartzCore.framework */; };
+		A65E173915517FC20058E95B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65E173815517FC20058E95B /* CoreMedia.framework */; };
+		A65E17401551800B0058E95B /* GSChromaKeyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A65E173E15517FF10058E95B /* GSChromaKeyFilter.m */; };
+		A65E1741155180270058E95B /* GSChromaKeyFilter.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = A65E173C15517FF10058E95B /* GSChromaKeyFilter.cikernel */; };
+		A65E17421551802E0058E95B /* GSPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A65E173215517F290058E95B /* GSPlayerView.m */; };
+		A65E1745155184A00058E95B /* GSApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A65E1744155184A00058E95B /* GSApplicationDelegate.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A65E170C15517EEF0058E95B /* AVGreenScreenPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVGreenScreenPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A65E171015517EEF0058E95B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A65E171315517EEF0058E95B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		A65E171415517EEF0058E95B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A65E171515517EEF0058E95B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A65E171815517EEF0058E95B /* AVGreenScreenPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AVGreenScreenPlayer-Info.plist"; sourceTree = "<group>"; };
+		A65E171A15517EEF0058E95B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A65E171C15517EEF0058E95B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A65E171E15517EEF0058E95B /* AVGreenScreenPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVGreenScreenPlayer-Prefix.pch"; sourceTree = "<group>"; };
+		A65E172215517EEF0058E95B /* GSDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSDocument.h; sourceTree = "<group>"; };
+		A65E172315517EEF0058E95B /* GSDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSDocument.m; sourceTree = "<group>"; };
+		A65E172615517EEF0058E95B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GSDocument.xib; sourceTree = "<group>"; };
+		A65E172915517EEF0058E95B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A65E173115517F290058E95B /* GSPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSPlayerView.h; sourceTree = "<group>"; };
+		A65E173215517F290058E95B /* GSPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSPlayerView.m; sourceTree = "<group>"; };
+		A65E173415517FAE0058E95B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A65E173615517FB90058E95B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A65E173815517FC20058E95B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		A65E173C15517FF10058E95B /* GSChromaKeyFilter.cikernel */ = {isa = PBXFileReference; lastKnownFileType = text; path = GSChromaKeyFilter.cikernel; sourceTree = "<group>"; };
+		A65E173D15517FF10058E95B /* GSChromaKeyFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSChromaKeyFilter.h; sourceTree = "<group>"; };
+		A65E173E15517FF10058E95B /* GSChromaKeyFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSChromaKeyFilter.m; sourceTree = "<group>"; };
+		A65E1743155184A00058E95B /* GSApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSApplicationDelegate.h; sourceTree = "<group>"; };
+		A65E1744155184A00058E95B /* GSApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSApplicationDelegate.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A65E170915517EEF0058E95B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A65E173915517FC20058E95B /* CoreMedia.framework in Frameworks */,
+				A65E173715517FB90058E95B /* QuartzCore.framework in Frameworks */,
+				A65E173515517FAE0058E95B /* AVFoundation.framework in Frameworks */,
+				A65E171115517EEF0058E95B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A65E170115517EEF0058E95B = {
+			isa = PBXGroup;
+			children = (
+				A65E171615517EEF0058E95B /* AVGreenScreenPlayer */,
+				A65E170F15517EEF0058E95B /* Frameworks */,
+				A65E170D15517EEF0058E95B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A65E170D15517EEF0058E95B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A65E170C15517EEF0058E95B /* AVGreenScreenPlayer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A65E170F15517EEF0058E95B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A65E173415517FAE0058E95B /* AVFoundation.framework */,
+				A65E171015517EEF0058E95B /* Cocoa.framework */,
+				A65E173815517FC20058E95B /* CoreMedia.framework */,
+				A65E173615517FB90058E95B /* QuartzCore.framework */,
+				A65E171215517EEF0058E95B /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A65E171215517EEF0058E95B /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A65E171315517EEF0058E95B /* AppKit.framework */,
+				A65E171415517EEF0058E95B /* CoreData.framework */,
+				A65E171515517EEF0058E95B /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		A65E171615517EEF0058E95B /* AVGreenScreenPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				A65E1743155184A00058E95B /* GSApplicationDelegate.h */,
+				A65E1744155184A00058E95B /* GSApplicationDelegate.m */,
+				A65E172215517EEF0058E95B /* GSDocument.h */,
+				A65E172315517EEF0058E95B /* GSDocument.m */,
+				A65E173315517F2F0058E95B /* Views */,
+				A65E173F15517FF90058E95B /* Filters */,
+				A65E173015517F070058E95B /* XIBs */,
+				A65E171715517EEF0058E95B /* Supporting Files */,
+			);
+			path = AVGreenScreenPlayer;
+			sourceTree = "<group>";
+		};
+		A65E171715517EEF0058E95B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A65E171815517EEF0058E95B /* AVGreenScreenPlayer-Info.plist */,
+				A65E171915517EEF0058E95B /* InfoPlist.strings */,
+				A65E171C15517EEF0058E95B /* main.m */,
+				A65E171E15517EEF0058E95B /* AVGreenScreenPlayer-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A65E173015517F070058E95B /* XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				A65E172815517EEF0058E95B /* MainMenu.xib */,
+				A65E172515517EEF0058E95B /* GSDocument.xib */,
+			);
+			name = XIBs;
+			sourceTree = "<group>";
+		};
+		A65E173315517F2F0058E95B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A65E173115517F290058E95B /* GSPlayerView.h */,
+				A65E173215517F290058E95B /* GSPlayerView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		A65E173F15517FF90058E95B /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				A65E173D15517FF10058E95B /* GSChromaKeyFilter.h */,
+				A65E173E15517FF10058E95B /* GSChromaKeyFilter.m */,
+				A65E173C15517FF10058E95B /* GSChromaKeyFilter.cikernel */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A65E170B15517EEF0058E95B /* AVGreenScreenPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A65E172D15517EEF0058E95B /* Build configuration list for PBXNativeTarget "AVGreenScreenPlayer" */;
+			buildPhases = (
+				A65E170815517EEF0058E95B /* Sources */,
+				A65E170915517EEF0058E95B /* Frameworks */,
+				A65E170A15517EEF0058E95B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AVGreenScreenPlayer;
+			productName = AVGreenScreenPlayer;
+			productReference = A65E170C15517EEF0058E95B /* AVGreenScreenPlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A65E170315517EEF0058E95B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = GS;
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = "Apple Inc.";
+			};
+			buildConfigurationList = A65E170615517EEF0058E95B /* Build configuration list for PBXProject "AVGreenScreenPlayer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A65E170115517EEF0058E95B;
+			productRefGroup = A65E170D15517EEF0058E95B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A65E170B15517EEF0058E95B /* AVGreenScreenPlayer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A65E170A15517EEF0058E95B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A65E171B15517EEF0058E95B /* InfoPlist.strings in Resources */,
+				A65E172715517EEF0058E95B /* GSDocument.xib in Resources */,
+				A65E172A15517EEF0058E95B /* MainMenu.xib in Resources */,
+				A65E1741155180270058E95B /* GSChromaKeyFilter.cikernel in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A65E170815517EEF0058E95B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A65E171D15517EEF0058E95B /* main.m in Sources */,
+				A65E172415517EEF0058E95B /* GSDocument.m in Sources */,
+				A65E17401551800B0058E95B /* GSChromaKeyFilter.m in Sources */,
+				A65E17421551802E0058E95B /* GSPlayerView.m in Sources */,
+				A65E1745155184A00058E95B /* GSApplicationDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A65E171915517EEF0058E95B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A65E171A15517EEF0058E95B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A65E172515517EEF0058E95B /* GSDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A65E172615517EEF0058E95B /* en */,
+			);
+			name = GSDocument.xib;
+			sourceTree = "<group>";
+		};
+		A65E172815517EEF0058E95B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A65E172915517EEF0058E95B /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A65E172B15517EEF0058E95B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A65E172C15517EEF0058E95B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A65E172E15517EEF0058E95B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AVGreenScreenPlayer/AVGreenScreenPlayer-Prefix.pch";
+				INFOPLIST_FILE = "AVGreenScreenPlayer/AVGreenScreenPlayer-Info.plist";
+				PRODUCT_NAME = AVGreenScreenPlayer;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A65E172F15517EEF0058E95B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AVGreenScreenPlayer/AVGreenScreenPlayer-Prefix.pch";
+				INFOPLIST_FILE = "AVGreenScreenPlayer/AVGreenScreenPlayer-Info.plist";
+				PRODUCT_NAME = AVGreenScreenPlayer;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A65E170615517EEF0058E95B /* Build configuration list for PBXProject "AVGreenScreenPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A65E172B15517EEF0058E95B /* Debug */,
+				A65E172C15517EEF0058E95B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A65E172D15517EEF0058E95B /* Build configuration list for PBXNativeTarget "AVGreenScreenPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A65E172E15517EEF0058E95B /* Debug */,
+				A65E172F15517EEF0058E95B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A65E170315517EEF0058E95B /* Project object */;
+}

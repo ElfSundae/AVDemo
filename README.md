@@ -78,6 +78,10 @@ Note: The sample has been developed for iPhones 4S and above/iPods with 4-inch d
 
 The AVFoundationExporter sample demonstrates how to export and transcode movie files, add metadata to movie files, and filter existing metadata in movie files using the AVAssetExportSession class.
 
+### AVGreenScreenPlayer
+
+This OS X sample application uses AVPlayerItemVideoOutput in combination with a custom CIFilter to do basic chroma keying in real time.
+
 ### AVLoupe
 
 This sample demonstrates how to use multiple synchronized AVPlayerLayer instances, associated with a single AVPlayer, to efficiently produce non-trivial presentation of timed visual media. Using just one AVPlayer this sample demonstrates how you can display the same video in multiple AVPlayerLayers simultaneously. With minimal code you can create very customized and creative forms of video display. As an example, this sample demonstrates an interactive loupe, or magnifying glass, for video playback. This is similar to features that you might have used in iPhoto and Aperture.
